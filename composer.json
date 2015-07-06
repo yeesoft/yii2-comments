@@ -5,5 +5,9 @@
         "psr-4": {
             "yeesoft\\comments\\": ""
         }
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "2.0.*"
     }
 }
