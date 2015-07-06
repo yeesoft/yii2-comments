@@ -1,0 +1,9 @@
+{
+    "name": "yeesoft/yii2-comments",
+    "description": "Comments module",
+    "autoload": {
+        "psr-4": {
+            "yeesoft\\comments\\": ""
+        }
+    }
+}
