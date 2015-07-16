@@ -2,6 +2,10 @@
 
 namespace yeesoft\comments\models;
 
+use Yii;
+use yii\behaviors\TimestampBehavior;
+use yeesoft\comments\Module;
+
 /**
  * This is the model class for table "comment".
  *
@@ -11,7 +15,7 @@ namespace yeesoft\comments\models;
  * @property integer $user_id
  * @property string $username
  * @property string $email
- * @property integer $replied_to
+ * @property integer $parent_id
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -26,6 +30,12 @@ namespace yeesoft\comments\models;
  */
 class Comment extends \yii\db\ActiveRecord
 {
+    const STATUS_PENDING   = 0;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_SPAM      = 2;
+    const STATUS_DELETED   = 3;
+    const SCENARIO_GUEST   = 'guest';
+    const SCENARIO_USER    = 'user';
 
     /**
      * @inheritdoc
@@ -38,18 +48,49 @@ class Comment extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function init()
+    {
+        parent::init();
+        $this->on(self::EVENT_BEFORE_INSERT, [$this, 'setUserData']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['model_id', 'created_at', 'updated_at', 'content'], 'required'],
-            [['model_id', 'user_id', 'replied_to', 'status', 'created_at', 'updated_at'],
-                'integer'],
+            [['content'], 'required'],
+            [['username', 'email'], 'required', 'on' => self::SCENARIO_GUEST],
+            [['parent_id'], 'integer'],
             [['content'], 'string'],
-            [['model'], 'string', 'max' => 64],
             [['username'], 'string', 'max' => 128],
-            [['email'], 'string', 'max' => 254],
-            [['user_ip'], 'string', 'max' => 15]
+            [['username', 'content'], 'string', 'min' => 4],
+            [['email'], 'email'],
+            ['username', 'unique',
+                'targetClass' => Module::getInstance()->userModel,
+                'targetAttribute' => 'username',
+                'on' => self::SCENARIO_GUEST
+            ],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios                       = parent::scenarios();
+        $scenarios[self::SCENARIO_USER]  = ['content', 'parent_id'];
+        $scenarios[self::SCENARIO_GUEST] = ['username', 'email', 'content', 'parent_id'];
+        return $scenarios;
     }
 
     /**
@@ -64,7 +105,7 @@ class Comment extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'username' => 'Username',
             'email' => 'Email',
-            'replied_to' => 'Replied To',
+            'parent_id' => 'Parent Id',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -80,5 +121,29 @@ class Comment extends \yii\db\ActiveRecord
     public static function find()
     {
         return new CommentQuery(get_called_class());
+    }
+
+    public function getAuthor()
+    {
+        if ($this->user_id) {
+            $userModel = Module::getInstance()->userModel;
+            return $userModel::findIdentity($this->user_id)->username;
+        } else {
+            return $this->username;
+        }
+    }
+
+    public function setUserData()
+    {
+        if (Yii::$app->user->isGuest) {
+            $this->user_ip = '127.0.0.1';
+        } else {
+            $this->user_id = Yii::$app->user->id;
+        }
+    }
+
+    public function isReplied()
+    {
+        return Comment::find()->where(['parent_id' => $this->id])->active()->count();
     }
 }

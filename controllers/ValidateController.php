@@ -1,0 +1,39 @@
+<?php
+
+namespace yeesoft\comments\controllers;
+
+use Yii;
+use yii\web\Response;
+use yii\web\Controller;
+use yii\widgets\ActiveForm;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yeesoft\comments\models\Comment;
+
+class ValidateController extends Controller
+{
+
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(),
+                [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'get-form' => ['post'],
+                    ],
+                ],
+        ]);
+    }
+
+    public function actionIndex()
+    {
+        $model = new Comment(['scenario' => (Yii::$app->user->isGuest) ? Comment::SCENARIO_GUEST
+                    : Comment::SCENARIO_USER]);
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+    }
+}

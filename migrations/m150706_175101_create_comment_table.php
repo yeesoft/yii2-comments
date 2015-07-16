@@ -17,11 +17,11 @@ class m150630_121101_create_post_table extends Migration
             [
             'id' => 'pk',
             'model' => Schema::TYPE_STRING.'(64) NOT NULL DEFAULT ""',
-            'model_id' => Schema::TYPE_INTEGER.'(11) NOT NULL',
+            'model_id' => Schema::TYPE_INTEGER.'(11)',
             'user_id' => Schema::TYPE_INTEGER.'(11) DEFAULT NULL',
             'username' => Schema::TYPE_STRING.'(128) DEFAULT NULL',
             'email' => Schema::TYPE_STRING.'(128) DEFAULT NULL',
-            'replied_to' => Schema::TYPE_INTEGER.'(11) DEFAULT NULL COMMENT "null-is not a reply, int-replied to comment id"',
+            'parent_id' => Schema::TYPE_INTEGER.'(11) DEFAULT NULL COMMENT "null-is not a reply, int-replied comment id"',
             'status' => Schema::TYPE_INTEGER.'(1) unsigned NOT NULL DEFAULT "1" COMMENT "0-pending,1-published,2-spam,3-deleted"',
             'created_at' => Schema::TYPE_INTEGER.' NOT NULL',
             'updated_at' => Schema::TYPE_INTEGER.' NOT NULL',
@@ -31,7 +31,7 @@ class m150630_121101_create_post_table extends Migration
 
         $this->createIndex('comment_model', 'comment', ['model', 'model_id']);
         $this->createIndex('comment_status', 'comment', 'status');
-        $this->createIndex('comment_reply', 'comment', 'replied_to');
+        $this->createIndex('comment_reply', 'comment', 'parent_id');
     }
 
     public function down()
