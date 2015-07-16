@@ -21,7 +21,7 @@ class DefaultController extends Controller
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
-                        'get-form' => ['post', 'get'],
+                        'get-form' => ['post'],
                     ],
                 ],
         ]);
