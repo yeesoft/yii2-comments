@@ -6,13 +6,9 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-use yeesoft\comments\Module;
-use yeesoft\comments\models\Comment;
 
 class DefaultController extends Controller
 {
-
-    //  public $layout = '@vendor/yeesoft/yii2-comments/views/layouts/main';
 
     public function behaviors()
     {
@@ -27,10 +23,14 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * Render reply form by AJAX request
+     *
+     * @return string
+     */
     public function actionGetForm()
     {
         $reply_to = (int) Yii::$app->getRequest()->post('reply_to');
-
         return $this->renderAjax('get-form', compact('reply_to'));
     }
 }

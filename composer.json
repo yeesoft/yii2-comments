@@ -7,6 +7,7 @@
         }
     },
     "require": {
+        "yiisoft/yii2": "*",
         "yiidoc/yii2-timeago": "dev-master"
     }
 }

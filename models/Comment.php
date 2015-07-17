@@ -85,6 +85,9 @@ class Comment extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function scenarios()
     {
         $scenarios                       = parent::scenarios();
@@ -116,6 +119,7 @@ class Comment extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
+     * 
      * @return CommentQuery the active query used by this AR class.
      */
     public static function find()
@@ -123,6 +127,11 @@ class Comment extends \yii\db\ActiveRecord
         return new CommentQuery(get_called_class());
     }
 
+    /**
+     * Get author of comment
+     *
+     * @return string
+     */
     public function getAuthor()
     {
         if ($this->user_id) {
@@ -133,17 +142,37 @@ class Comment extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * Updates user's data before comment insert
+     */
     public function setUserData()
     {
-        if (Yii::$app->user->isGuest) {
-            $this->user_ip = '127.0.0.1';
-        } else {
+        $this->user_ip = Yii::$app->getRequest()->getUserIP();
+
+        if (!Yii::$app->user->isGuest) {
             $this->user_id = Yii::$app->user->id;
         }
     }
 
+    /**
+     * Check whether comment has replies
+     *
+     * @return int nubmer of replies
+     */
     public function isReplied()
     {
         return Comment::find()->where(['parent_id' => $this->id])->active()->count();
+    }
+
+    /**
+     * Get count of active comments by $model and $model_id
+     *
+     * @param string $model
+     * @param int $model_id
+     * @return int
+     */
+    public static function activeCount($model, $model_id = NULL)
+    {
+        return Comment::find()->where(['model' => $model, 'model_id' => $model_id])->active()->count();
     }
 }

@@ -2,8 +2,6 @@
 
 use yii\widgets\ListView;
 use yii\helpers\ArrayHelper;
-use yii\data\ActiveDataProvider;
-use yeesoft\comments\models\Comment;
 
 /* @var $this yii\web\View */
 /* @var $model yeesoft\comments\models\Comment */
@@ -28,4 +26,3 @@ if ($comment) {
         'layout' => "{items}{pager}"
     ]);
 }
-?>

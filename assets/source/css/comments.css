@@ -1,5 +1,5 @@
 .comments {
-    margin: 10px 0;
+    margin: 30px 0;
 }
 .comment{
     margin-bottom: 25px;
@@ -42,7 +42,7 @@
 }
 
 .comment-form{
-    margin-top: 30px;
+    margin-top: 10px;
 }.comment-form-reply{
     margin-top: 0px;
 }.comment-form .comment-fields .row {
@@ -56,8 +56,8 @@
     font-size: 0.9em;
 }.comment-form .comment-fields .form-group{
     margin-bottom: 0;
-}.comment-form .comment-fields-more, .comments-main-form .reply-cancel {
-   /* display: none; */
+}.comments-main-form .comment-fields-more, .comments-main-form .reply-cancel {
+     display: none; 
 }.comment-form .buttons .btn {
     margin-right:5px;
 }.comment-form .comment-fields-more {

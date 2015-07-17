@@ -2,12 +2,13 @@
 
 namespace yeesoft\comments\widgets;
 
-use Yii;
 use yii\data\ActiveDataProvider;
-use yeesoft\comments\models\Comment;
-use yii\base\Model;
 use yeesoft\comments\Module;
+use yeesoft\comments\models\Comment;
 
+/**
+ * Widget for displaying comments
+ */
 class CommentsList extends \yii\base\Widget
 {
     public $comment;
@@ -43,18 +44,4 @@ class CommentsList extends \yii\base\Widget
         ]);
     }
 
-    /**
-     * Generate reply comments WHERE config
-     * 
-     * @param \yeesoft\comments\models\Comment $comment
-     * @return array
-     */
-    public static function getReplyCommentsConfig(Comment $comment)
-    {
-        $model     = $comment->model;
-        $model_id  = $comment->model_id;
-        $parent_id = $comment->id;
-
-        return compact('model', 'model_id', 'parent_id');
-    }
 }

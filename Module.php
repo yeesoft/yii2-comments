@@ -2,8 +2,11 @@
 
 namespace yeesoft\comments;
 
-use Yii;
-
+/**
+ * Comments Module For Yii2
+ *
+ * @author Taras Makitra <taras.makitra@gmail.com>
+ */
 class Module extends \yii\base\Module
 {
     /**
@@ -11,21 +14,79 @@ class Module extends \yii\base\Module
      */
     const DEFAULT_AVATAR = '/images/user.png';
 
+    /**
+     *  Comments Module controller namespace
+     *
+     * @var string
+     */
     public $controllerNamespace = 'yeesoft\comments\controllers';
-    public $maxNestedLevel       = 5;
-    public $onlyRegistered       = false;
-    public $orderDirection       = SORT_DESC;
+
+    /**
+     *  User model class name
+     * 
+     * @var string 
+     */
+    public $userModel = 'yii\web\User';
+
+    /**
+     * Maximum allowed nested level for comment's replies
+     *
+     * @var int
+     */
+    public $maxNestedLevel = 5;
+
+    /**
+     *  Indicates whether not registered users can leave a comment
+     *
+     * @var boolean
+     */
+    public $onlyRegistered = FALSE;
+
+    /**
+     * Comments order direction
+     *
+     * @var int const
+     */
+    public $orderDirection = SORT_DESC;
+
+    /**
+     * Replies order direction
+     *
+     * @var int const
+     */
     public $nestedOrderDirection = SORT_ASC;
-    // public $showWebsiteField = true;
-    public $usernameRegexp       = '/^(\w|\d)+$/';
-    public $usernameBlackRegexp  = '/^(.)*admin(.)*$/i';
+
+    /**
+     * The field for displaying user avatars.
+     *
+     * Is this field is NULL default avatar image will be displayed. Also it
+     * can specify path to image or use callable type.
+     *
+     * If this property is specified as a callback, it should have the following signature:
+     *
+     * ~~~
+     * function ($user_id)
+     * ~~~
+     *
+     * Example of module settings :
+     * ~~~
+     * 'comments' => [
+     *       'class' => 'yeesoft\comments\Module',
+     *       'userAvatar' => function($user_id){
+     *           return User::getUserAvatarByID($user_id);
+     *       }
+     *   ]
+     * ~~~
+     * @var string|callable
+     */
     public $userAvatar;
-    public $userModel            = 'yeesoft\usermanagement\models\User';
+
+    /**
+     * Comments asset url
+     *
+     * @var string
+     */
     public $commentsAssetUrl;
-
-
-
-    //public $controllerNamespace = '';
 
     /**
      * Options for captcha
@@ -40,13 +101,11 @@ class Module extends \yii\base\Module
     ];
 
     /**
-     * @inheritdoc
+     * Render user avatar by UserID according to $userAvatar setting
+     * 
+     * @param int $user_id
+     * @return string
      */
-    public function init()
-    {
-        parent::init();
-    }
-
     public function renderUserAvatar($user_id)
     {
         $this->userAvatar = Module::getInstance()->userAvatar;

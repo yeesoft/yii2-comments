@@ -6,6 +6,7 @@ use yii\helpers\HtmlPurifier;
 use yeesoft\comments\Module;
 use yeesoft\comments\widgets\CommentsList;
 use yeesoft\comments\widgets\CommentsForm;
+use yeesoft\comments\components\CommentsHelper;
 ?>
 
 <div class="avatar">
@@ -32,22 +33,21 @@ use yeesoft\comments\widgets\CommentsForm;
 <?php if ($nested_level < Module::getInstance()->maxNestedLevel): ?>
     <?php if (!Module::getInstance()->onlyRegistered): ?>
         <div class="reply-form">
-            <?php
-            if ($model->id == ArrayHelper::getValue(Yii::$app->getRequest()->post(),
-                    'Comment.parent_id')) {
-                echo CommentsForm::widget(['reply_to' => $model->id]);
-            }
-            ?>
+            <?php if ($model->id == ArrayHelper::getValue(Yii::$app->getRequest()->post(),
+                    'Comment.parent_id')) :
+                ?>
+                <?= CommentsForm::widget(['reply_to' => $model->id]); ?>
+        <?php endif; ?>
         </div>
     <?php endif; ?>
 
     <?php
     if ($model->isReplied()) {
         echo CommentsList::widget(ArrayHelper::merge(
-                CommentsList::getReplyCommentsConfig($model),
+                CommentsHelper::getReplyConfig($model),
                 [
-                'comment' => $comment,
-                'nested_level' => $nested_level + 1
+                "comment" => $comment,
+                "nested_level" => $nested_level + 1
                 ]
             )
         );

@@ -29,7 +29,8 @@ class m150630_121101_create_post_table extends Migration
             'user_ip' => Schema::TYPE_STRING.'(15) DEFAULT NULL',
             ], $tableOptions);
 
-        $this->createIndex('comment_model', 'comment', ['model', 'model_id']);
+        $this->createIndex('comment_model', 'comment', ['model']);
+        $this->createIndex('comment_model_id', 'comment', ['model', 'model_id']);
         $this->createIndex('comment_status', 'comment', 'status');
         $this->createIndex('comment_reply', 'comment', 'parent_id');
     }

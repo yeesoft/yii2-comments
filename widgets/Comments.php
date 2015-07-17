@@ -16,13 +16,7 @@ class Comments extends \yii\base\Widget
 
     public function init()
     {
-        if (defined('YII_DEBUG') && YII_DEBUG) {
-            Yii::$app->assetManager->forceCopy = true;
-        }
-
         parent::init();
-
-//        \yeesoft\comments\Module::init();
 
         if ($this->model instanceof Model) {
             $this->model_id = $this->model->id;
@@ -53,7 +47,7 @@ class Comments extends \yii\base\Widget
                     ]);
                 }
 
-                Yii::$app->getResponse()->refresh();
+                return Yii::$app->getResponse()->redirect(Yii::$app->request->referrer);
             }
         }
 

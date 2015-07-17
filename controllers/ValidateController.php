@@ -26,6 +26,11 @@ class ValidateController extends Controller
         ]);
     }
 
+    /**
+     * Action for AJAX form validation
+     *
+     * @return array
+     */
     public function actionIndex()
     {
         $model = new Comment(['scenario' => (Yii::$app->user->isGuest) ? Comment::SCENARIO_GUEST

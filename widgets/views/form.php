@@ -54,7 +54,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
         <div class="comment-fields-more">
             <div class="buttons text-right">
                 <?=
-                Html::submitButton('Cancel',
+                Html::button('Cancel',
                     ['class' => 'btn btn-default btn-sm reply-cancel'])
                 ?>
                 <?=
