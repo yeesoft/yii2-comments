@@ -29,6 +29,7 @@ Configuration
 - In your config file
 
 ```php
+'bootstrap' => ['comments'],
 'modules'=>[
 	'comments' => [
 		'class' => 'yeesoft\comments\Module',
