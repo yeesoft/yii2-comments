@@ -2,9 +2,9 @@
 
 namespace yeesoft\comments\models;
 
+use yeesoft\comments\Module;
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yeesoft\comments\Module;
 
 /**
  * This is the model class for table "comment".
@@ -30,12 +30,13 @@ use yeesoft\comments\Module;
  */
 class Comment extends \yii\db\ActiveRecord
 {
-    const STATUS_PENDING   = 0;
-    const STATUS_PUBLISHED = 1;
-    const STATUS_SPAM      = 2;
-    const STATUS_DELETED   = 3;
-    const SCENARIO_GUEST   = 'guest';
-    const SCENARIO_USER    = 'user';
+    const STATUS_PENDING = 0;
+    const STATUS_APPROVED = 1;
+    const STATUS_SPAM = 2;
+    const STATUS_TRASH = 3;
+    const STATUS_PUBLISHED = self::STATUS_APPROVED;
+    const SCENARIO_GUEST = 'guest';
+    const SCENARIO_USER = 'user';
 
     /**
      * @inheritdoc
@@ -82,6 +83,7 @@ class Comment extends \yii\db\ActiveRecord
                 'targetAttribute' => 'username',
                 'on' => self::SCENARIO_GUEST
             ],
+            ['created_at', 'date', 'timestampAttribute' => 'created_at'],
         ];
     }
 
@@ -90,8 +92,8 @@ class Comment extends \yii\db\ActiveRecord
      */
     public function scenarios()
     {
-        $scenarios                       = parent::scenarios();
-        $scenarios[self::SCENARIO_USER]  = ['content', 'parent_id'];
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_USER] = ['content', 'parent_id'];
         $scenarios[self::SCENARIO_GUEST] = ['username', 'email', 'content', 'parent_id'];
         return $scenarios;
     }
@@ -108,7 +110,7 @@ class Comment extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'username' => 'Username',
             'email' => 'Email',
-            'parent_id' => 'Parent Id',
+            'parent_id' => 'Parent Comment',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -119,12 +121,60 @@ class Comment extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return CommentQuery the active query used by this AR class.
      */
     public static function find()
     {
         return new CommentQuery(get_called_class());
+    }
+
+    /**
+     * getTypeList
+     * @return array
+     */
+    public static function getStatusList()
+    {
+        return [
+            self::STATUS_PENDING => 'Pending',
+            self::STATUS_APPROVED => 'Approved',
+            self::STATUS_SPAM => 'Spam',
+            self::STATUS_TRASH => 'Trash',
+        ];
+    }
+
+    /**
+     * getStatusOptionsList
+     * @return array
+     */
+    public static function getStatusOptionsList()
+    {
+        return [
+            [self::STATUS_PENDING, 'Pending', 'default'],
+            [self::STATUS_APPROVED, 'Approved', 'primary'],
+            [self::STATUS_SPAM, 'Spam', 'default'],
+            [self::STATUS_TRASH, 'Trash', 'default']
+        ];
+    }
+
+    /**
+     * Get created date and time
+     * @return string
+     */
+    public function getCreatedDateTime()
+    {
+        return date('Y-m-d H:i',
+            ($this->isNewRecord) ? time() : $this->created_at);
+    }
+
+    /**
+     * Get created date and time
+     * @return string
+     */
+    public function getUpdatedDateTime()
+    {
+        return date('Y-m-d H:i',
+            ($this->isNewRecord) ? time() : $this->updated_at);
     }
 
     /**

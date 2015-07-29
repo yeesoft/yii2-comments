@@ -2,16 +2,16 @@
 
 namespace yeesoft\comments\components;
 
+use yeesoft\comments\models\Comment;
 use Yii;
 use yii\web\Cookie;
-use yeesoft\comments\models\Comment;
 
 class CommentsHelper
 {
 
     /**
      * Set cookies using associative array
-     * 
+     *
      * @param array $cookies cookies to set
      */
     public static function setCookies(array $cookies)
@@ -45,7 +45,7 @@ class CommentsHelper
             'dependency' => [
                 'class' => 'yii\caching\DbDependency',
                 'sql' => "SELECT COUNT(*) FROM {$tableName} "
-                ."WHERE `model` = '{$model}' AND `model_id` = '{$model_id}'",
+                    . "WHERE `model` = '{$model}' AND `model_id` = '{$model_id}'",
             ]
         ];
     }
@@ -58,8 +58,8 @@ class CommentsHelper
      */
     public static function getReplyConfig(Comment $comment)
     {
-        $model     = $comment->model;
-        $model_id  = $comment->model_id;
+        $model = $comment->model;
+        $model_id = $comment->model_id;
         $parent_id = $comment->id;
 
         return compact('model', 'model_id', 'parent_id');

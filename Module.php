@@ -23,8 +23,8 @@ class Module extends \yii\base\Module
 
     /**
      *  User model class name
-     * 
-     * @var string 
+     *
+     * @var string
      */
     public $userModel = 'yii\web\User';
 
@@ -102,7 +102,7 @@ class Module extends \yii\base\Module
 
     /**
      * Render user avatar by UserID according to $userAvatar setting
-     * 
+     *
      * @param int $user_id
      * @return string
      */
@@ -110,7 +110,7 @@ class Module extends \yii\base\Module
     {
         $this->userAvatar = Module::getInstance()->userAvatar;
         if ($this->userAvatar === null) {
-            return $this->commentsAssetUrl.Module::DEFAULT_AVATAR;
+            return $this->commentsAssetUrl . Module::DEFAULT_AVATAR;
         } elseif (is_string($this->userAvatar)) {
             return $this->userAvatar;
         } else {

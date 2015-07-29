@@ -2,12 +2,12 @@
 
 namespace yeesoft\comments\widgets;
 
-use Yii;
-use yii\base\Model;
-use yeesoft\comments\Module;
-use yeesoft\comments\models\Comment;
 use yeesoft\comments\assets\CommentsAsset;
 use yeesoft\comments\components\CommentsHelper;
+use yeesoft\comments\models\Comment;
+use yeesoft\comments\Module;
+use Yii;
+use yii\base\Model;
 
 class Comments extends \yii\base\Widget
 {
@@ -20,21 +20,21 @@ class Comments extends \yii\base\Widget
 
         if ($this->model instanceof Model) {
             $this->model_id = $this->model->id;
-            $this->model    = $this->model->tableName();
+            $this->model = $this->model->tableName();
         }
     }
 
     public function run()
     {
-        $commentsAsset                          = CommentsAsset::register($this->getView());
+        $commentsAsset = CommentsAsset::register($this->getView());
         Module::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
 
-        $model    = $this->model;
+        $model = $this->model;
         $model_id = $this->model_id;
 
-        $comment           = new Comment(compact('model', 'model_id'));
+        $comment = new Comment(compact('model', 'model_id'));
         $comment->scenario = (Yii::$app->user->isGuest) ? Comment::SCENARIO_GUEST
-                : Comment::SCENARIO_USER;
+            : Comment::SCENARIO_USER;
 
         if (!Module::getInstance()->onlyRegistered && $comment->load(Yii::$app->getRequest()->post())) {
 

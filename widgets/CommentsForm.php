@@ -2,11 +2,11 @@
 
 namespace yeesoft\comments\widgets;
 
-use Yii;
-use yii\web\Cookie;
-use yii\helpers\HtmlPurifier;
 use yeesoft\comments\models\Comment;
+use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\HtmlPurifier;
+use yii\web\Cookie;
 
 class CommentsForm extends \yii\base\Widget
 {
@@ -19,12 +19,13 @@ class CommentsForm extends \yii\base\Widget
 
         if (!$this->_comment) {
             $this->_comment = new Comment(['scenario' => (Yii::$app->user->isGuest)
-                        ? Comment::SCENARIO_GUEST : Comment::SCENARIO_USER]);
+                ? Comment::SCENARIO_GUEST : Comment::SCENARIO_USER]);
 
             $post = Yii::$app->getRequest()->post();
             if ($this->_comment->load($post) &&
                 ($this->reply_to == ArrayHelper::getValue($post,
-                    'Comment.parent_id'))) {
+                        'Comment.parent_id'))
+            ) {
 
                 $this->_comment->validate();
             }
@@ -33,7 +34,6 @@ class CommentsForm extends \yii\base\Widget
         if ($this->reply_to) {
             $this->_comment->parent_id = $this->reply_to;
         }
-
 
 
         /* if($model->id == Yii::$app->getRequest()->post('Comment')['parent_id']){

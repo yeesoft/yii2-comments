@@ -1,13 +1,13 @@
 {
-    "name": "yeesoft/yii2-comments",
-    "description": "Comments module",
-    "autoload": {
-        "psr-4": {
-            "yeesoft\\comments\\": ""
-        }
-    },
-    "require": {
-        "yiisoft/yii2": "*",
-        "yiidoc/yii2-timeago": "dev-master"
+  "name": "yeesoft/yii2-comments",
+  "description": "Comments module",
+  "autoload": {
+    "psr-4": {
+      "yeesoft\\comments\\": ""
     }
+  },
+  "require": {
+    "yiisoft/yii2": "*",
+    "yiidoc/yii2-timeago": "dev-master"
+  }
 }

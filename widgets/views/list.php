@@ -1,7 +1,7 @@
 <?php
 
-use yii\widgets\ListView;
 use yii\helpers\ArrayHelper;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $model yeesoft\comments\models\Comment */
@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 <?php
 $containerClass = (ArrayHelper::getValue($dataProvider->query->where,
-        'parent_id')) ? 'sub-comments' : 'comments';
+    'parent_id')) ? 'sub-comments' : 'comments';
 ?>
 
 <?php
@@ -18,9 +18,9 @@ if ($comment) {
         'dataProvider' => $dataProvider,
         'emptyText' => 'No Comments',
         'itemView' => function ($model, $key, $index, $widget) use ($comment, $nested_level) {
-        return $this->render('item',
+            return $this->render('item',
                 compact('model', 'widget', 'comment', 'nested_level'));
-    },
+        },
         'options' => ['class' => $containerClass],
         'itemOptions' => ['class' => 'comment'],
         'layout' => "{items}{pager}"

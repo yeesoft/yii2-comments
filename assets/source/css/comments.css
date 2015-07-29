@@ -1,77 +1,109 @@
 .comments {
     margin: 30px 0;
 }
-.comment{
+
+.comment {
     margin-bottom: 25px;
 }
-.comment a:hover{
+
+.comment a:hover {
     text-decoration: none;
 }
+
 .comment .avatar, .comment-form .avatar {
-    float: left; 
+    float: left;
     margin-right: 10px;
 }
-.comment .avatar img, .comment-form .avatar img{
-    width: 48px; 
-    height: 48px; 
-    border: 1px solid #d2d2d2; 
-    background: #f6f8f9; 
+
+.comment .avatar img, .comment-form .avatar img {
+    width: 48px;
+    height: 48px;
+    border: 1px solid #d2d2d2;
+    background: #f6f8f9;
     border-radius: 4px;
 }
+
 .comment .author {
     font-weight: bold;
 }
+
 .comment .comment-text {
     margin: 3px 0;
 }
 
 .comment .sub-comments {
-    margin: 25px 0 0 60px; 
+    margin: 25px 0 0 60px;
 }
 
 .comment .comment-header, .comment .comment-footer {
     font-size: 0.9em;
     opacity: 0.6;
-}.comment:hover .comment-header, .comment:hover .comment-footer {
-    opacity: 0.9;
-}.comment:hover a {
-    opacity: 1;
-}
-.comment .comment-content, .comment-form .comment-fields, .comment .comment-form-reply {
-    margin-left:60px; 
 }
 
-.comment-form{
+.comment:hover .comment-header, .comment:hover .comment-footer {
+    opacity: 0.9;
+}
+
+.comment:hover a {
+    opacity: 1;
+}
+
+.comment .comment-content, .comment-form .comment-fields, .comment .comment-form-reply {
+    margin-left: 60px;
+}
+
+.comment-form {
     margin-top: 10px;
-}.comment-form-reply{
+}
+
+.comment-form-reply {
     margin-top: 0px;
-}.comment-form .comment-fields .row {
+}
+
+.comment-form .comment-fields .row {
     margin: 0;
-}.comment-form .comment-fields div[class^="col"] {
+}
+
+.comment-form .comment-fields div[class^="col"] {
     padding-left: 0 !important;
     padding-bottom: 0 !important;
-}.comment-form .comment-fields .control-label{
+}
+
+.comment-form .comment-fields .control-label {
     font-weight: normal;
     margin-bottom: 2px;
     font-size: 0.9em;
-}.comment-form .comment-fields .form-group{
-    margin-bottom: 0;
-}.comments-main-form .comment-fields-more, .comments-main-form .reply-cancel {
-     display: none; 
-}.comment-form .buttons .btn {
-    margin-right:5px;
-}.comment-form .comment-fields-more {
-    width:100%;
-}.comment-form .fields {
-    width:auto;
-    overflow:hidden;
-}.comment-form .buttons {
-    float: right;
-    margin: 0 10px 0 10px;
-}.comment-form textarea{
-    resize: vertical;
 }
 
+.comment-form .comment-fields .form-group {
+    margin-bottom: 0;
+}
+
+.comments-main-form .comment-fields-more, .comments-main-form .reply-cancel {
+    display: none;
+}
+
+.comment-form .buttons .btn {
+    margin-right: 5px;
+}
+
+.comment-form .comment-fields-more {
+    width: 100%;
+}
+
+.comment-form .fields {
+    width: auto;
+    overflow: hidden;
+}
+
+.comment-form .buttons {
+    float: right;
+    margin: 0 10px 0 10px;
+}
+
+.comment-form textarea {
+    resize: vertical;
+}
 
 .dot-left:before, .dot-right:after {
     content: "\2022";

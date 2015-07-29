@@ -2,9 +2,9 @@
 
 namespace yeesoft\comments\widgets;
 
-use yii\data\ActiveDataProvider;
-use yeesoft\comments\Module;
 use yeesoft\comments\models\Comment;
+use yeesoft\comments\Module;
+use yii\data\ActiveDataProvider;
 
 /**
  * Widget for displaying comments
@@ -25,7 +25,7 @@ class CommentsList extends \yii\base\Widget
     public function run()
     {
         $order_direction = ($this->parent_id) ? Module::getInstance()->nestedOrderDirection
-                : Module::getInstance()->orderDirection;
+            : Module::getInstance()->orderDirection;
 
         $dataProvider = new ActiveDataProvider([
             'query' => Comment::find()->where([
@@ -37,11 +37,11 @@ class CommentsList extends \yii\base\Widget
         ]);
 
         return $this->render('list',
-                [
+            [
                 'dataProvider' => $dataProvider,
                 'comment' => $this->comment,
                 'nested_level' => $this->nested_level,
-        ]);
+            ]);
     }
 
 }

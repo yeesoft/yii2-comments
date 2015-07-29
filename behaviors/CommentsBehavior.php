@@ -2,8 +2,8 @@
 
 namespace yeesoft\comments\behaviors;
 
-use yii\base\Behavior;
 use yeesoft\comments\widgets\Comments;
+use yii\base\Behavior;
 
 /**
  * Comments Behavior

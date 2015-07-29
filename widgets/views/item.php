@@ -1,12 +1,13 @@
 <?php
 
-use yii\timeago\TimeAgo;
+use yeesoft\comments\components\CommentsHelper;
+use yeesoft\comments\Module;
+use yeesoft\comments\widgets\CommentsForm;
+use yeesoft\comments\widgets\CommentsList;
 use yii\helpers\ArrayHelper;
 use yii\helpers\HtmlPurifier;
-use yeesoft\comments\Module;
-use yeesoft\comments\widgets\CommentsList;
-use yeesoft\comments\widgets\CommentsForm;
-use yeesoft\comments\components\CommentsHelper;
+use yii\timeago\TimeAgo;
+
 ?>
 
 <div class="avatar">
@@ -34,22 +35,23 @@ use yeesoft\comments\components\CommentsHelper;
     <?php if (!Module::getInstance()->onlyRegistered): ?>
         <div class="reply-form">
             <?php if ($model->id == ArrayHelper::getValue(Yii::$app->getRequest()->post(),
-                    'Comment.parent_id')) :
+                    'Comment.parent_id')
+            ) :
                 ?>
                 <?= CommentsForm::widget(['reply_to' => $model->id]); ?>
-        <?php endif; ?>
+            <?php endif; ?>
         </div>
     <?php endif; ?>
 
     <?php
     if ($model->isReplied()) {
         echo CommentsList::widget(ArrayHelper::merge(
-                CommentsHelper::getReplyConfig($model),
-                [
+            CommentsHelper::getReplyConfig($model),
+            [
                 "comment" => $comment,
                 "nested_level" => $nested_level + 1
-                ]
-            )
+            ]
+        )
         );
     }
     ?>

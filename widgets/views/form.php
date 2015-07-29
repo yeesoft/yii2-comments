@@ -1,33 +1,33 @@
 <?php
 
-use Yii;
-use yii\helpers\Url;
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use yeesoft\comments\Module;
 use yeesoft\comments\assets\CommentsAsset;
+use yeesoft\comments\Module;
+use Yii;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $modelyeesoft\comments\models\Comment */
 ?>
 
 <?php
-$commentsAsset                          = CommentsAsset::register($this);
+$commentsAsset = CommentsAsset::register($this);
 Module::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
 
-$formID     = 'comment-form'.(($comment->parent_id) ? '-'.$comment->parent_id : '');
+$formID = 'comment-form' . (($comment->parent_id) ? '-' . $comment->parent_id : '');
 $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
 ?>
 
 <div class="comment-form <?= $replyClass ?> clearfix">
 
     <?php
-    $form       = ActiveForm::begin([
-            'action' => NULL,
-            'validateOnBlur' => FALSE,
-            'validationUrl' => Url::to('comments/validate'),
-            'id' => $formID,
-            'class' => 'com-form'
+    $form = ActiveForm::begin([
+        'action' => NULL,
+        'validateOnBlur' => FALSE,
+        'validationUrl' => Url::to('comments/validate'),
+        'id' => $formID,
+        'class' => 'com-form'
     ]);
 
     if ($comment->parent_id) {
@@ -88,8 +88,8 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
                     <?php else: ?>
                         <div class="col-lg-6">
                             <?=
-                            (($comment->parent_id) ? 'Reply as ' : 'Post as ').
-                            '<b>'.Yii::$app->user->username.'</b>';
+                            (($comment->parent_id) ? 'Reply as ' : 'Post as ') .
+                            '<b>' . Yii::$app->user->username . '</b>';
                             ?>
                         </div>
                     <?php endif; ?>
