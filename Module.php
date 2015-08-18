@@ -26,7 +26,7 @@ class Module extends \yii\base\Module
      *
      * @var string
      */
-    public $userModel = 'yii\web\User';
+    public $userModel = 'common\models\User';
 
     /**
      * Maximum allowed nested level for comment's replies
