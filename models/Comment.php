@@ -186,7 +186,9 @@ class Comment extends \yii\db\ActiveRecord
     {
         if ($this->user_id) {
             $userModel = Module::getInstance()->userModel;
-            return $userModel::findIdentity($this->user_id)->username;
+            $user = $userModel::findIdentity($this->user_id);
+            return ($user && isset($user)) ? $user->username : '?';
+
         } else {
             return $this->username;
         }
