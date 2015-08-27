@@ -9,7 +9,7 @@ This module allows you to easy integrate comments system into your Yii2 applicat
 Installation
 ------------
 
-Either run
+- Either run
 
 ```
 composer require --prefer-dist yeesoft/yii2-comments "*"
@@ -23,6 +23,12 @@ or add
 
 to the require section of your `composer.json` file.
 
+- Run migrations
+
+```php
+yii migrate --migrationPath=@vendor/yeesoft/yii2-comments/migrations/
+```
+
 Configuration
 ------
 
@@ -35,12 +41,6 @@ Configuration
 		'class' => 'yeesoft\comments\Module',
 	],
 ],
-```
-
-- Run migrations
-
-```php
-yii migrate --migrationPath=@vendor/yeesoft/yii2-comments/migrations/
 ```
 
 - In you model [optional]
