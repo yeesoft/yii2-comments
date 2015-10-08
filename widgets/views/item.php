@@ -16,7 +16,7 @@ use yii\timeago\TimeAgo;
 
 <div class="comment-content">
     <div class="comment-header">
-        <span class="author"><?= HtmlPurifier::process($model->getAuthor()); ?></span>
+        <a class="author"><?= HtmlPurifier::process($model->getAuthor()); ?></a>
         <span class="time dot-left dot-right"><?= TimeAgo::widget(['timestamp' => $model->created_at]); ?></span>
     </div>
     <div class="comment-text">
@@ -26,6 +26,10 @@ use yii\timeago\TimeAgo;
         <div class="comment-footer">
             <?php if (!Module::getInstance()->onlyRegistered): ?>
                 <a class="reply-button" data-reply-to="<?= $model->id; ?>" href="#">Reply</a>
+                <!--<span class="dot-left"></span>
+                <a class="glyphicon glyphicon-thumbs-up"></a> <span>0</span> &nbsp;
+                <a class="glyphicon glyphicon-thumbs-down"></a> <span>0</span><span class="dot-left"></span>
+                -->
             <?php endif; ?>
         </div>
     <?php endif; ?>
@@ -34,10 +38,7 @@ use yii\timeago\TimeAgo;
 <?php if ($nested_level < Module::getInstance()->maxNestedLevel): ?>
     <?php if (!Module::getInstance()->onlyRegistered): ?>
         <div class="reply-form">
-            <?php if ($model->id == ArrayHelper::getValue(Yii::$app->getRequest()->post(),
-                    'Comment.parent_id')
-            ) :
-                ?>
+            <?php if ($model->id == ArrayHelper::getValue(Yii::$app->getRequest()->post(), 'Comment.parent_id')) : ?>
                 <?= CommentsForm::widget(['reply_to' => $model->id]); ?>
             <?php endif; ?>
         </div>
@@ -46,13 +47,10 @@ use yii\timeago\TimeAgo;
     <?php
     if ($model->isReplied()) {
         echo CommentsList::widget(ArrayHelper::merge(
-            CommentsHelper::getReplyConfig($model),
-            [
-                "comment" => $comment,
-                "nested_level" => $nested_level + 1
-            ]
-        )
-        );
+            CommentsHelper::getReplyConfig($model), [
+            "comment" => $comment,
+            "nested_level" => $nested_level + 1
+        ]));
     }
     ?>
 <?php endif; ?>

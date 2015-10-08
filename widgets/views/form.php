@@ -25,7 +25,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
     $form = ActiveForm::begin([
         'action' => NULL,
         'validateOnBlur' => FALSE,
-        'validationUrl' => Url::to('comments/validate'),
+        'validationUrl' => Url::to(Module::getInstance()->commentsModuleID . '/validate'),
         'id' => $formID,
         'class' => 'com-form'
     ]);
@@ -53,22 +53,15 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
 
         <div class="comment-fields-more">
             <div class="buttons text-right">
-                <?=
-                Html::button('Cancel',
-                    ['class' => 'btn btn-default btn-sm reply-cancel'])
-                ?>
-                <?=
-                Html::submitButton(($comment->parent_id) ? 'Reply' : 'Post',
-                    ['class' => 'btn btn-primary btn-sm'])
-                ?>
+                <?= Html::button('Cancel', ['class' => 'btn btn-default btn-sm reply-cancel']) ?>
+                <?= Html::submitButton(($comment->parent_id) ? 'Reply' : 'Post', ['class' => 'btn btn-primary btn-sm']) ?>
             </div>
             <div class="fields">
                 <div class="row">
                     <?php if (Yii::$app->user->isGuest): ?>
                         <div class="col-lg-6">
                             <?=
-                            $form->field($comment, 'username',
-                                ['enableAjaxValidation' => true])->textInput([
+                            $form->field($comment, 'username', ['enableAjaxValidation' => true])->textInput([
                                 'maxlength' => true,
                                 'class' => 'form-control input-sm',
                                 'placeholder' => 'Your name'
@@ -87,10 +80,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
                         </div>
                     <?php else: ?>
                         <div class="col-lg-6">
-                            <?=
-                            (($comment->parent_id) ? 'Reply as ' : 'Post as ') .
-                            '<b>' . Yii::$app->user->username . '</b>';
-                            ?>
+                            <?= (($comment->parent_id) ? 'Reply as ' : 'Post as ') . '<b>' . Yii::$app->user->username . '</b>'; ?>
                         </div>
                     <?php endif; ?>
                 </div>

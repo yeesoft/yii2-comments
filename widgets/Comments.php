@@ -33,13 +33,12 @@ class Comments extends \yii\base\Widget
         $model_id = $this->model_id;
 
         $comment = new Comment(compact('model', 'model_id'));
-        $comment->scenario = (Yii::$app->user->isGuest) ? Comment::SCENARIO_GUEST
-            : Comment::SCENARIO_USER;
+        $comment->scenario = (Yii::$app->user->isGuest) ? Comment::SCENARIO_GUEST : Comment::SCENARIO_USER;
 
         if (!Module::getInstance()->onlyRegistered && $comment->load(Yii::$app->getRequest()->post())) {
 
-            if ($comment->validate() && $comment->save()) {
-
+            if ($comment->validate() && Yii::$app->getRequest()->validateCsrfToken()
+                && Yii::$app->getRequest()->getCsrfToken(true) && $comment->save()) {
                 if (Yii::$app->user->isGuest) {
                     CommentsHelper::setCookies([
                         'username' => $comment->username,

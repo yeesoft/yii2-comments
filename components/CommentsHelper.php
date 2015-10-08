@@ -35,8 +35,7 @@ class CommentsHelper
      * @param int $duration
      * @return array
      */
-    public static function getCacheProperties($model, $model_id = '',
-                                              $duration = 3600)
+    public static function getCacheProperties($model, $model_id = '', $duration = 3600)
     {
         $tableName = Comment::tableName();
 

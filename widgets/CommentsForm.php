@@ -18,15 +18,10 @@ class CommentsForm extends \yii\base\Widget
         parent::init();
 
         if (!$this->_comment) {
-            $this->_comment = new Comment(['scenario' => (Yii::$app->user->isGuest)
-                ? Comment::SCENARIO_GUEST : Comment::SCENARIO_USER]);
+            $this->_comment = new Comment(['scenario' => (Yii::$app->user->isGuest) ? Comment::SCENARIO_GUEST : Comment::SCENARIO_USER]);
 
             $post = Yii::$app->getRequest()->post();
-            if ($this->_comment->load($post) &&
-                ($this->reply_to == ArrayHelper::getValue($post,
-                        'Comment.parent_id'))
-            ) {
-
+            if ($this->_comment->load($post) && ($this->reply_to == ArrayHelper::getValue($post, 'Comment.parent_id'))) {
                 $this->_comment->validate();
             }
         }
@@ -34,21 +29,6 @@ class CommentsForm extends \yii\base\Widget
         if ($this->reply_to) {
             $this->_comment->parent_id = $this->reply_to;
         }
-
-
-        /* if($model->id == Yii::$app->getRequest()->post('Comment')['parent_id']){
-
-
-          //echo '<br><br>Model ID = '.$model->id.'<br><br>';
-
-
-
-
-          print_r(Yii::$app->getRequest()->post());
-          echo '<br><br>';
-          print_r($comment->getAttributes());
-
-          } */
     }
 
     public function run()

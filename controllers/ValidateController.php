@@ -33,8 +33,7 @@ class ValidateController extends Controller
      */
     public function actionIndex()
     {
-        $model = new Comment(['scenario' => (Yii::$app->user->isGuest) ? Comment::SCENARIO_GUEST
-            : Comment::SCENARIO_USER]);
+        $model = new Comment(['scenario' => (Yii::$app->user->isGuest) ? Comment::SCENARIO_GUEST : Comment::SCENARIO_USER]);
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
