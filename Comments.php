@@ -2,12 +2,14 @@
 
 namespace yeesoft\comments;
 
+use Yii;
+
 /**
  * Comments Module For Yii2
  *
  * @author Taras Makitra <taras.makitra@gmail.com>
  */
-class Module extends \yii\base\Module
+class Comments extends \yii\base\Module
 {
     /**
      * Path to default avatar image
@@ -85,7 +87,7 @@ class Module extends \yii\base\Module
      * Example of module settings :
      * ~~~
      * 'comments' => [
-     *       'class' => 'yeesoft\comments\Module',
+     *       'class' => 'yeesoft\comments\Comments',
      *       'userAvatar' => function($user_id){
      *           return User::getUserAvatarByID($user_id);
      *       }
@@ -138,6 +140,32 @@ class Module extends \yii\base\Module
     ];
 
     /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+        $this->registerTranslations();
+    }
+
+    public function registerTranslations()
+    {
+        Yii::$app->i18n->translations['yii2-comments/*'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'sourceLanguage' => 'en-US',
+            'basePath' => '@vendor/yeesoft/yii2-comments/messages',
+            'fileMap' => [
+                'yii2-comments/comments' => 'comments.php',
+            ],
+        ];
+    }
+
+    public static function t($category, $message, $params = [], $language = null)
+    {
+        return Yii::t('yii2-comments/' . $category, $message, $params, $language);
+    }
+
+    /**
      * Render user avatar by UserID according to $userAvatar setting
      *
      * @param int $user_id
@@ -145,9 +173,9 @@ class Module extends \yii\base\Module
      */
     public function renderUserAvatar($user_id)
     {
-        $this->userAvatar = Module::getInstance()->userAvatar;
+        $this->userAvatar = self::getInstance()->userAvatar;
         if ($this->userAvatar === null) {
-            return $this->commentsAssetUrl . Module::DEFAULT_AVATAR;
+            return $this->commentsAssetUrl . self::DEFAULT_AVATAR;
         } elseif (is_string($this->userAvatar)) {
             return $this->userAvatar;
         } else {

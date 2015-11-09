@@ -1,11 +1,12 @@
 <?php
 
 use yeesoft\comments\assets\CommentsAsset;
-use yeesoft\comments\Module;
+use yeesoft\comments\Comments;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use yeesoft\Yee;
 
 /* @var $this yii\web\View */
 /* @var $modelyeesoft\comments\models\Comment */
@@ -13,7 +14,7 @@ use yii\widgets\ActiveForm;
 
 <?php
 $commentsAsset = CommentsAsset::register($this);
-Module::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
+Comments::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
 
 $formID = 'comment-form' . (($comment->parent_id) ? '-' . $comment->parent_id : '');
 $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
@@ -25,7 +26,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
     $form = ActiveForm::begin([
         'action' => NULL,
         'validateOnBlur' => FALSE,
-        'validationUrl' => Url::to(Module::getInstance()->commentsModuleID . '/validate'),
+        'validationUrl' => Url::to(Comments::getInstance()->commentsModuleID . '/validate'),
         'id' => $formID,
         'class' => 'com-form'
     ]);
@@ -36,7 +37,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
     ?>
 
     <div class="avatar">
-        <img src="<?= Module::getInstance()->renderUserAvatar(Yii::$app->user->id) ?>"/>
+        <img src="<?= Comments::getInstance()->renderUserAvatar(Yii::$app->user->id) ?>"/>
     </div>
     <div class="comment-fields">
 
@@ -45,7 +46,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
                 <?=
                 $form->field($comment, 'content')->textarea([
                     'class' => 'form-control input-sm',
-                    'placeholder' => 'Share your thoughts...'
+                    'placeholder' => Comments::t('comments', 'Share your thoughts...')
                 ])->label(false);
                 ?>
             </div>
@@ -53,8 +54,8 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
 
         <div class="comment-fields-more">
             <div class="buttons text-right">
-                <?= Html::button('Cancel', ['class' => 'btn btn-default btn-sm reply-cancel']) ?>
-                <?= Html::submitButton(($comment->parent_id) ? 'Reply' : 'Post', ['class' => 'btn btn-primary btn-sm']) ?>
+                <?= Html::button(Yee::t('yee', 'Cancel'), ['class' => 'btn btn-default btn-sm reply-cancel']) ?>
+                <?= Html::submitButton(($comment->parent_id) ? Comments::t('comments', 'Reply') : Comments::t('comments', 'Post'), ['class' => 'btn btn-primary btn-sm']) ?>
             </div>
             <div class="fields">
                 <div class="row">
@@ -64,7 +65,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
                             $form->field($comment, 'username', ['enableAjaxValidation' => true])->textInput([
                                 'maxlength' => true,
                                 'class' => 'form-control input-sm',
-                                'placeholder' => 'Your name'
+                                'placeholder' => Comments::t('comments', 'Your name')
                             ])->label(false)
                             ?>
                         </div>
@@ -74,13 +75,13 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
                                 'maxlength' => true,
                                 'email' => true,
                                 'class' => 'form-control input-sm',
-                                'placeholder' => 'Your email'
+                                'placeholder' => Comments::t('comments', 'Your email')
                             ])->label(false)
                             ?>
                         </div>
                     <?php else: ?>
                         <div class="col-lg-6">
-                            <?= (($comment->parent_id) ? 'Reply as ' : 'Post as ') . '<b>' . Yii::$app->user->username . '</b>'; ?>
+                            <?= (($comment->parent_id) ? Comments::t('comments', 'Reply as') : Comments::t('comments', 'Post as')) . ' <b>' . Yii::$app->user->username . '</b>'; ?>
                         </div>
                     <?php endif; ?>
                 </div>

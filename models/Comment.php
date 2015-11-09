@@ -2,9 +2,10 @@
 
 namespace yeesoft\comments\models;
 
-use yeesoft\comments\Module;
+use yeesoft\comments\Comments;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yeesoft\Yee;
 
 /**
  * This is the model class for table "comment".
@@ -77,11 +78,11 @@ class Comment extends \yii\db\ActiveRecord
             [['content'], 'string'],
             [['username'], 'string', 'max' => 128],
             [['username', 'content'], 'string', 'min' => 4],
-            ['username', 'match', 'pattern' => Module::getInstance()->usernameRegexp, 'on' => self::SCENARIO_GUEST],
-            ['username', 'match', 'not' => true, 'pattern' => Module::getInstance()->usernameBlackRegexp, 'on' => self::SCENARIO_GUEST],
+            ['username', 'match', 'pattern' => Comments::getInstance()->usernameRegexp, 'on' => self::SCENARIO_GUEST],
+            ['username', 'match', 'not' => true, 'pattern' => Comments::getInstance()->usernameBlackRegexp, 'on' => self::SCENARIO_GUEST],
             [['email'], 'email'],
             ['username', 'unique',
-                'targetClass' => Module::getInstance()->userModel,
+                'targetClass' => Comments::getInstance()->userModel,
                 'targetAttribute' => 'username',
                 'on' => self::SCENARIO_GUEST,
             ],
@@ -106,18 +107,18 @@ class Comment extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'model' => 'Model',
-            'model_id' => 'Model ID',
-            'user_id' => 'User ID',
-            'username' => 'Username',
-            'email' => 'Email',
-            'parent_id' => 'Parent Comment',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'content' => 'Content',
-            'user_ip' => 'User Ip',
+            'id' => Yee::t('yee', 'ID'),
+            'model' => Comments::t('comments', 'Model'),
+            'model_id' => Comments::t('comments', 'Model ID'),
+            'user_id' => Comments::t('comments', 'User ID'),
+            'username' => Yee::t('yee', 'Username'),
+            'email' => Yee::t('yee', 'E-mail'),
+            'parent_id' => Comments::t('comments', 'Parent Comment'),
+            'status' => Yee::t('yee', 'Status'),
+            'created_at' => Yee::t('yee', 'Created'),
+            'updated_at' => Yee::t('yee', 'Updated'),
+            'content' => Yee::t('yee', 'Content'),
+            'user_ip' => Yee::t('yee', 'IP'),
         ];
     }
 
@@ -138,10 +139,10 @@ class Comment extends \yii\db\ActiveRecord
     public static function getStatusList()
     {
         return [
-            self::STATUS_PENDING => 'Pending',
-            self::STATUS_APPROVED => 'Approved',
-            self::STATUS_SPAM => 'Spam',
-            self::STATUS_TRASH => 'Trash',
+            self::STATUS_PENDING => Yee::t('yee', 'Pending'),
+            self::STATUS_APPROVED => Yee::t('yee', 'Approved'),
+            self::STATUS_SPAM => Yee::t('yee', 'Spam'),
+            self::STATUS_TRASH => Yee::t('yee', 'Trash'),
         ];
     }
 
@@ -152,10 +153,10 @@ class Comment extends \yii\db\ActiveRecord
     public static function getStatusOptionsList()
     {
         return [
-            [self::STATUS_PENDING, 'Pending', 'default'],
-            [self::STATUS_APPROVED, 'Approved', 'primary'],
-            [self::STATUS_SPAM, 'Spam', 'default'],
-            [self::STATUS_TRASH, 'Trash', 'default']
+            [self::STATUS_PENDING, Yee::t('yee', 'Pending'), 'default'],
+            [self::STATUS_APPROVED, Yee::t('yee', 'Approved'), 'primary'],
+            [self::STATUS_SPAM, Yee::t('yee', 'Spam'), 'default'],
+            [self::STATUS_TRASH, Yee::t('yee', 'Trash'), 'default']
         ];
     }
 
@@ -187,9 +188,9 @@ class Comment extends \yii\db\ActiveRecord
     public function getAuthor()
     {
         if ($this->user_id) {
-            $userModel = Module::getInstance()->userModel;
+            $userModel = Comments::getInstance()->userModel;
             $user = $userModel::findIdentity($this->user_id);
-            return ($user && isset($user)) ? $user->username : Module::getInstance()->deletedUserName;
+            return ($user && isset($user)) ? $user->username : Comments::getInstance()->deletedUserName;
 
         } else {
             return $this->username;

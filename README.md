@@ -38,7 +38,7 @@ Configuration
 'bootstrap' => ['comments'],
 'modules'=>[
 	'comments' => [
-		'class' => 'yeesoft\comments\Module',
+		'class' => 'yeesoft\comments\Comments',
 	],
 ],
 ```
@@ -106,7 +106,7 @@ Use this options to configurate comments module:
   Example of module settings:
   ```php
     'comments' => [
-      'class' => 'yeesoft\comments\Module',
+      'class' => 'yeesoft\comments\Comments',
       'userAvatar' => function($user_id){
         return User::getUserAvatarByID($user_id);
       }

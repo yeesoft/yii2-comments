@@ -3,7 +3,7 @@
 namespace yeesoft\comments\widgets;
 
 use yeesoft\comments\models\Comment;
-use yeesoft\comments\Module;
+use yeesoft\comments\Comments;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -24,8 +24,8 @@ class CommentsList extends \yii\base\Widget
 
     public function run()
     {
-        $orderDirection = ($this->parent_id) ? Module::getInstance()->nestedOrderDirection : Module::getInstance()->orderDirection;
-        $pageSize = ($this->parent_id) ? 0 : Module::getInstance()->commentsPerPage;
+        $orderDirection = ($this->parent_id) ? Comments::getInstance()->nestedOrderDirection : Comments::getInstance()->orderDirection;
+        $pageSize = ($this->parent_id) ? 0 : Comments::getInstance()->commentsPerPage;
 
         $dataProvider = new ActiveDataProvider([
             'query' => Comment::find()->where([

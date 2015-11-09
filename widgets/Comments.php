@@ -5,7 +5,7 @@ namespace yeesoft\comments\widgets;
 use yeesoft\comments\assets\CommentsAsset;
 use yeesoft\comments\components\CommentsHelper;
 use yeesoft\comments\models\Comment;
-use yeesoft\comments\Module;
+use yeesoft\comments\Comments as CommentModule;
 use Yii;
 use yii\base\Model;
 
@@ -27,7 +27,7 @@ class Comments extends \yii\base\Widget
     public function run()
     {
         $commentsAsset = CommentsAsset::register($this->getView());
-        Module::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
+        CommentModule::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
 
         $model = $this->model;
         $model_id = $this->model_id;
@@ -35,7 +35,7 @@ class Comments extends \yii\base\Widget
         $comment = new Comment(compact('model', 'model_id'));
         $comment->scenario = (Yii::$app->user->isGuest) ? Comment::SCENARIO_GUEST : Comment::SCENARIO_USER;
 
-        if (!Module::getInstance()->onlyRegistered && $comment->load(Yii::$app->getRequest()->post())) {
+        if (!CommentModule::getInstance()->onlyRegistered && $comment->load(Yii::$app->getRequest()->post())) {
 
             if ($comment->validate() && Yii::$app->getRequest()->validateCsrfToken()
                 && Yii::$app->getRequest()->getCsrfToken(true) && $comment->save()) {

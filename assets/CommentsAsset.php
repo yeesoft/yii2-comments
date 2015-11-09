@@ -2,7 +2,7 @@
 
 namespace yeesoft\comments\assets;
 
-use yeesoft\comments\Module;
+use yeesoft\comments\Comments;
 use yii\web\AssetBundle;
 use yii\web\View;
 
@@ -27,7 +27,7 @@ class CommentsAsset extends AssetBundle
      */
     public static function register($view)
     {
-        $view->registerJs('commentsModuleID = "' . Module::getInstance()->commentsModuleID . '";', View::POS_HEAD);
+        $view->registerJs('commentsModuleID = "' . Comments::getInstance()->commentsModuleID . '";', View::POS_HEAD);
         return parent::register($view);
     }
 }
