@@ -5,7 +5,6 @@ namespace yeesoft\comments\models;
 use yeesoft\comments\Comments;
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yeesoft\Yee;
 
 /**
  * This is the model class for table "comment".
@@ -107,18 +106,18 @@ class Comment extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yee::t('yee', 'ID'),
+            'id' => Comments::t('comments', 'ID'),
             'model' => Comments::t('comments', 'Model'),
             'model_id' => Comments::t('comments', 'Model ID'),
             'user_id' => Comments::t('comments', 'User ID'),
-            'username' => Yee::t('yee', 'Username'),
-            'email' => Yee::t('yee', 'E-mail'),
+            'username' => Comments::t('comments', 'Username'),
+            'email' => Comments::t('comments', 'E-mail'),
             'parent_id' => Comments::t('comments', 'Parent Comment'),
-            'status' => Yee::t('yee', 'Status'),
-            'created_at' => Yee::t('yee', 'Created'),
-            'updated_at' => Yee::t('yee', 'Updated'),
-            'content' => Yee::t('yee', 'Content'),
-            'user_ip' => Yee::t('yee', 'IP'),
+            'status' => Comments::t('comments', 'Status'),
+            'created_at' => Comments::t('comments', 'Created'),
+            'updated_at' => Comments::t('comments', 'Updated'),
+            'content' => Comments::t('comments', 'Content'),
+            'user_ip' => Comments::t('comments', 'IP'),
         ];
     }
 
@@ -139,10 +138,10 @@ class Comment extends \yii\db\ActiveRecord
     public static function getStatusList()
     {
         return [
-            self::STATUS_PENDING => Yee::t('yee', 'Pending'),
-            self::STATUS_APPROVED => Yee::t('yee', 'Approved'),
-            self::STATUS_SPAM => Yee::t('yee', 'Spam'),
-            self::STATUS_TRASH => Yee::t('yee', 'Trash'),
+            self::STATUS_PENDING => Comments::t('comments', 'Pending'),
+            self::STATUS_APPROVED => Comments::t('comments', 'Approved'),
+            self::STATUS_SPAM => Comments::t('comments', 'Spam'),
+            self::STATUS_TRASH => Comments::t('comments', 'Trash'),
         ];
     }
 
@@ -153,10 +152,10 @@ class Comment extends \yii\db\ActiveRecord
     public static function getStatusOptionsList()
     {
         return [
-            [self::STATUS_PENDING, Yee::t('yee', 'Pending'), 'default'],
-            [self::STATUS_APPROVED, Yee::t('yee', 'Approved'), 'primary'],
-            [self::STATUS_SPAM, Yee::t('yee', 'Spam'), 'default'],
-            [self::STATUS_TRASH, Yee::t('yee', 'Trash'), 'default']
+            [self::STATUS_PENDING, Comments::t('comments', 'Pending'), 'default'],
+            [self::STATUS_APPROVED, Comments::t('comments', 'Approved'), 'primary'],
+            [self::STATUS_SPAM, Comments::t('comments', 'Spam'), 'default'],
+            [self::STATUS_TRASH, Comments::t('comments', 'Trash'), 'default']
         ];
     }
 
@@ -166,8 +165,7 @@ class Comment extends \yii\db\ActiveRecord
      */
     public function getCreatedDateTime()
     {
-        return date('Y-m-d H:i',
-            ($this->isNewRecord) ? time() : $this->created_at);
+        return date('Y-m-d H:i', ($this->isNewRecord) ? time() : $this->created_at);
     }
 
     /**
@@ -176,8 +174,7 @@ class Comment extends \yii\db\ActiveRecord
      */
     public function getUpdatedDateTime()
     {
-        return date('Y-m-d H:i',
-            ($this->isNewRecord) ? time() : $this->updated_at);
+        return date('Y-m-d H:i', ($this->isNewRecord) ? time() : $this->updated_at);
     }
 
     /**
