@@ -24,8 +24,7 @@ class CommentsList extends \yii\base\Widget
 
     public function run()
     {
-        $orderDirection = ($this->parent_id) ? Module::getInstance()->nestedOrderDirection : Module::getInstance()->orderDirection;
-        $pageSize = ($this->parent_id) ? 0 : Module::getInstance()->commentsPerPage;
+        $order_direction = ($this->parent_id) ? Module::getInstance()->nestedOrderDirection : Module::getInstance()->orderDirection;
 
         $dataProvider = new ActiveDataProvider([
             'query' => Comment::find()->where([
@@ -33,17 +32,7 @@ class CommentsList extends \yii\base\Widget
                 'model_id' => $this->model_id,
                 'parent_id' => $this->parent_id,
                 'status' => Comment::STATUS_PUBLISHED,
-            ]),
-            'pagination' => [
-                'pageSize' => $pageSize,
-                'pageParam' => 'comment-page',
-                'pageSizeParam' => 'comments-per-page',
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => $orderDirection,
-                ]
-            ],
+            ])->orderBy(['id' => $order_direction]),
         ]);
 
         return $this->render('list', [
@@ -52,4 +41,5 @@ class CommentsList extends \yii\base\Widget
             'nested_level' => $this->nested_level,
         ]);
     }
+
 }

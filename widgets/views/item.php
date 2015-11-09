@@ -16,7 +16,7 @@ use yii\timeago\TimeAgo;
 
 <div class="comment-content">
     <div class="comment-header">
-        <a class="author"><?= HtmlPurifier::process($model->getAuthor()); ?></a>
+        <span class="author"><?= HtmlPurifier::process($model->getAuthor()); ?></span>
         <span class="time dot-left dot-right"><?= TimeAgo::widget(['timestamp' => $model->created_at]); ?></span>
     </div>
     <div class="comment-text">
@@ -26,10 +26,6 @@ use yii\timeago\TimeAgo;
         <div class="comment-footer">
             <?php if (!Module::getInstance()->onlyRegistered): ?>
                 <a class="reply-button" data-reply-to="<?= $model->id; ?>" href="#">Reply</a>
-                <!--<span class="dot-left"></span>
-                <a class="glyphicon glyphicon-thumbs-up"></a> <span>0</span> &nbsp;
-                <a class="glyphicon glyphicon-thumbs-down"></a> <span>0</span><span class="dot-left"></span>
-                -->
             <?php endif; ?>
         </div>
     <?php endif; ?>
@@ -48,9 +44,10 @@ use yii\timeago\TimeAgo;
     if ($model->isReplied()) {
         echo CommentsList::widget(ArrayHelper::merge(
             CommentsHelper::getReplyConfig($model), [
-            "comment" => $comment,
-            "nested_level" => $nested_level + 1
-        ]));
+                "comment" => $comment,
+                "nested_level" => $nested_level + 1
+            ]
+        ));
     }
     ?>
 <?php endif; ?>

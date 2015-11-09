@@ -3,22 +3,11 @@
 }
 
 .comment {
-    margin-bottom: 30px;
-}
-
-.sub-comments .comment {
-    margin-bottom: 10px;
+    margin-bottom: 25px;
 }
 
 .comment a:hover {
     text-decoration: none;
-}
-
-.comment .avatar img, .comment-form .avatar img,
-.sub-comments .avatar img, .sub-comments .comment-form .avatar img {
-    border: 1px solid #d2d2d2;
-    background: #f6f8f9;
-    border-radius: 4px;
 }
 
 .comment .avatar, .comment-form .avatar {
@@ -26,23 +15,12 @@
     margin-right: 10px;
 }
 
-.comment .avatar {
-    margin-top: 3px;
-}
-
-.comment-form .avatar {
-    margin-top: 0px;
-}
-
 .comment .avatar img, .comment-form .avatar img {
     width: 48px;
     height: 48px;
-
-}
-
-.sub-comments .avatar img, .sub-comments .comment-form .avatar img {
-    width: 38px;
-    height: 38px;
+    border: 1px solid #d2d2d2;
+    background: #f6f8f9;
+    border-radius: 4px;
 }
 
 .comment .author {
@@ -54,11 +32,7 @@
 }
 
 .comment .sub-comments {
-    margin: 15px 0 0 60px;
-}
-
-.comment .sub-comments .sub-comments {
-    margin-left: 50px;
+    margin: 25px 0 0 60px;
 }
 
 .comment .comment-header, .comment .comment-footer {
@@ -67,7 +41,7 @@
 }
 
 .comment:hover .comment-header, .comment:hover .comment-footer {
-/ / opacity : 0.9;
+    opacity: 0.9;
 }
 
 .comment:hover a {
@@ -76,10 +50,6 @@
 
 .comment .comment-content, .comment-form .comment-fields, .comment .comment-form-reply {
     margin-left: 60px;
-}
-
-.sub-comments .comment-content, .sub-comments .comment-fields, .sub-comments .comment-form-reply {
-    margin-left: 50px;
 }
 
 .comment-form {
@@ -139,17 +109,4 @@
     content: "\2022";
     display: inline-block;
     margin: 0 5px;
-}
-
-@media screen and (max-width: 768px) {
-    .comment .sub-comments .sub-comments {
-        margin-left: 20px;
-    }
-}
-
-@media screen and (max-width: 540px) {
-    .comment-form .buttons {
-        float: none;
-        margin-bottom: 10px;
-    }
 }

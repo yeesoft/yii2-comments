@@ -29,6 +29,21 @@ class CommentsForm extends \yii\base\Widget
         if ($this->reply_to) {
             $this->_comment->parent_id = $this->reply_to;
         }
+
+
+        /* if($model->id == Yii::$app->getRequest()->post('Comment')['parent_id']){
+
+
+          //echo '<br><br>Model ID = '.$model->id.'<br><br>';
+
+
+
+
+          print_r(Yii::$app->getRequest()->post());
+          echo '<br><br>';
+          print_r($comment->getAttributes());
+
+          } */
     }
 
     public function run()

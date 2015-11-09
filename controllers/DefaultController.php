@@ -12,15 +12,14 @@ class DefaultController extends Controller
 
     public function behaviors()
     {
-        return ArrayHelper::merge(parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'get-form' => ['post'],
-                    ],
+        return ArrayHelper::merge(parent::behaviors(), [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'get-form' => ['post'],
                 ],
-            ]);
+            ],
+        ]);
     }
 
     /**

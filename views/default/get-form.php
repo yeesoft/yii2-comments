@@ -2,6 +2,7 @@
 
 use yeesoft\comments\Module;
 use yeesoft\comments\widgets\CommentsForm;
+
 ?>
 
 <?php if (!Module::getInstance()->onlyRegistered): ?>
