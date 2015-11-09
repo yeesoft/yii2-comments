@@ -37,8 +37,8 @@ class Comments extends \yii\base\Widget
 
         if (!Module::getInstance()->onlyRegistered && $comment->load(Yii::$app->getRequest()->post())) {
 
-            if ($comment->validate() && $comment->save()) {
-
+            if ($comment->validate() && Yii::$app->getRequest()->validateCsrfToken()
+                && Yii::$app->getRequest()->getCsrfToken(true) && $comment->save()) {
                 if (Yii::$app->user->isGuest) {
                     CommentsHelper::setCookies([
                         'username' => $comment->username,

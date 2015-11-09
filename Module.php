@@ -29,11 +29,25 @@ class Module extends \yii\base\Module
     public $userModel = 'common\models\User';
 
     /**
+     * Name to display if user is deleted
+     *
+     * @var string
+     */
+    public $deletedUserName = 'DELETED';
+
+    /**
      * Maximum allowed nested level for comment's replies
      *
      * @var int
      */
     public $maxNestedLevel = 5;
+
+    /**
+     * Count of first level comments per page
+     *
+     * @var int
+     */
+    public $commentsPerPage = 5;
 
     /**
      *  Indicates whether not registered users can leave a comment
@@ -87,6 +101,29 @@ class Module extends \yii\base\Module
      * @var string
      */
     public $commentsAssetUrl;
+
+    /**
+     * Pattern that will be applied for user names on comment form.
+     *
+     * @var string
+     */
+    public $usernameRegexp = '/^(\w|\d|_|\-| )+$/';
+
+    /**
+     * Pattern that will be applied for user names on comment form.
+     * It contain regexp that should NOT be in username
+     * Default pattern doesn't allow anything having "admin"
+     *
+     * @var string
+     */
+    public $usernameBlackRegexp = '/^(.)*admin(.)*$/i';
+
+    /**
+     * Comments module ID.
+     *
+     * @var string
+     */
+    public $commentsModuleID = 'comments';
 
     /**
      * Options for captcha

@@ -9,8 +9,8 @@ use yii\timeago\TimeAgo;
 
 /* @var $this yii\web\View */
 /* @var $model yeesoft\comments\models\Comment */
-
-$cacheKey = 'comment' . $model . $model_id;
+$commentsPage = Yii::$app->getRequest()->get("comment-page", 1);
+$cacheKey = 'comment' . $model . $model_id . $commentsPage;
 $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
 
 ?>

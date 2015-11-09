@@ -77,11 +77,13 @@ class Comment extends \yii\db\ActiveRecord
             [['content'], 'string'],
             [['username'], 'string', 'max' => 128],
             [['username', 'content'], 'string', 'min' => 4],
+            ['username', 'match', 'pattern' => Module::getInstance()->usernameRegexp, 'on' => self::SCENARIO_GUEST],
+            ['username', 'match', 'not' => true, 'pattern' => Module::getInstance()->usernameBlackRegexp, 'on' => self::SCENARIO_GUEST],
             [['email'], 'email'],
             ['username', 'unique',
                 'targetClass' => Module::getInstance()->userModel,
                 'targetAttribute' => 'username',
-                'on' => self::SCENARIO_GUEST
+                'on' => self::SCENARIO_GUEST,
             ],
             ['created_at', 'date', 'timestampAttribute' => 'created_at'],
         ];
@@ -163,7 +165,8 @@ class Comment extends \yii\db\ActiveRecord
      */
     public function getCreatedDateTime()
     {
-        return date('Y-m-d H:i', ($this->isNewRecord) ? time() : $this->created_at);
+        return date('Y-m-d H:i',
+            ($this->isNewRecord) ? time() : $this->created_at);
     }
 
     /**
@@ -172,7 +175,8 @@ class Comment extends \yii\db\ActiveRecord
      */
     public function getUpdatedDateTime()
     {
-        return date('Y-m-d H:i', ($this->isNewRecord) ? time() : $this->updated_at);
+        return date('Y-m-d H:i',
+            ($this->isNewRecord) ? time() : $this->updated_at);
     }
 
     /**
@@ -185,7 +189,8 @@ class Comment extends \yii\db\ActiveRecord
         if ($this->user_id) {
             $userModel = Module::getInstance()->userModel;
             $user = $userModel::findIdentity($this->user_id);
-            return ($user && isset($user)) ? $user->username : '?';
+            return ($user && isset($user)) ? $user->username : Module::getInstance()->deletedUserName;
+
         } else {
             return $this->username;
         }
