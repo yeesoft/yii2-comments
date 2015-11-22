@@ -160,21 +160,47 @@ class Comment extends \yii\db\ActiveRecord
     }
 
     /**
-     * Get created date and time
+     * Get created date
+     *
+     * @param string $format date format
      * @return string
      */
-    public function getCreatedDateTime()
+    public function getCreatedDate($format = 'Y-m-d')
     {
-        return date('Y-m-d H:i', ($this->isNewRecord) ? time() : $this->created_at);
+        return date($format, ($this->isNewRecord) ? time() : $this->created_at);
     }
 
     /**
-     * Get created date and time
+     * Get created date
+     *
+     * @param string $format date format
      * @return string
      */
-    public function getUpdatedDateTime()
+    public function getUpdatedDate($format = 'Y-m-d')
     {
-        return date('Y-m-d H:i', ($this->isNewRecord) ? time() : $this->updated_at);
+        return date($format, ($this->isNewRecord) ? time() : $this->updated_at);
+    }
+
+    /**
+     * Get created time
+     *
+     * @param string $format time format
+     * @return string
+     */
+    public function getCreatedTime($format = 'H:i')
+    {
+        return date($format, ($this->isNewRecord) ? time() : $this->created_at);
+    }
+
+    /**
+     * Get created time
+     *
+     * @param string $format time format
+     * @return string
+     */
+    public function getUpdatedTime($format = 'H:i')
+    {
+        return date($format, ($this->isNewRecord) ? time() : $this->updated_at);
     }
 
     /**

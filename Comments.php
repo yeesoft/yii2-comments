@@ -12,6 +12,11 @@ use Yii;
 class Comments extends \yii\base\Module
 {
     /**
+     * Version number of the module.
+     */
+    const VERSION = '0.1-a';
+
+    /**
      * Path to default avatar image
      */
     const DEFAULT_AVATAR = '/images/user.png';

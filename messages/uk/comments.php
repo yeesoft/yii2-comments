@@ -3,6 +3,7 @@ return [
     'All Comments' => 'Всі Коментарі',
     'Approve' => 'Одобрити',
     'Approved' => 'Підтверджено',
+    'Cancel' => 'Скасувати',
     'Comment' => 'Коментар',
     'Comments' => 'Коментарі',
     'Content' => 'Вміст',
@@ -28,7 +29,7 @@ return [
     'Unapprove' => 'Скасувати',
     'Updated' => 'Оновлено',
     'User ID' => 'ID Користувача',
-    'Username' => 'Username',
+    'Username' => 'Користувач',
     'Your email' => 'Ваш е-мейл',
     'Your name' => 'Ваші ім\'я',
 ];

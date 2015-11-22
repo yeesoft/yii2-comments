@@ -6,7 +6,6 @@ use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-use yeesoft\Yee;
 
 /* @var $this yii\web\View */
 /* @var $modelyeesoft\comments\models\Comment */
@@ -54,7 +53,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
 
         <div class="comment-fields-more">
             <div class="buttons text-right">
-                <?= Html::button(Yee::t('yee', 'Cancel'), ['class' => 'btn btn-default btn-sm reply-cancel']) ?>
+                <?= Html::button(Comments::t('comments', 'Cancel'), ['class' => 'btn btn-default btn-sm reply-cancel']) ?>
                 <?= Html::submitButton(($comment->parent_id) ? Comments::t('comments', 'Reply') : Comments::t('comments', 'Post'), ['class' => 'btn btn-primary btn-sm']) ?>
             </div>
             <div class="fields">
