@@ -5,6 +5,7 @@ namespace yeesoft\comments\assets;
 use yeesoft\comments\Comments;
 use yii\web\AssetBundle;
 use yii\web\View;
+use yii\helpers\Url;
 
 class CommentsAsset extends AssetBundle
 {
@@ -27,7 +28,15 @@ class CommentsAsset extends AssetBundle
      */
     public static function register($view)
     {
-        $view->registerJs('commentsModuleID = "' . Comments::getInstance()->commentsModuleID . '";', View::POS_HEAD);
+        $commentsModuleID = Comments::getInstance()->commentsModuleID;
+        $getFormLink = Url::to(["/$commentsModuleID/default/get-form"]);
+        $js = <<<JS
+commentsModuleID = "$commentsModuleID";
+commentsFormLink = "$getFormLink";
+JS;
+
+        $view->registerJs($js, View::POS_HEAD);
+
         return parent::register($view);
     }
 }

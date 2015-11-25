@@ -35,7 +35,7 @@ class Comments extends \yii\base\Widget
         $comment = new Comment(compact('model', 'model_id'));
         $comment->scenario = (Yii::$app->user->isGuest) ? Comment::SCENARIO_GUEST : Comment::SCENARIO_USER;
 
-        if (!CommentModule::getInstance()->onlyRegistered && $comment->load(Yii::$app->getRequest()->post())) {
+        if ((!CommentModule::getInstance()->onlyRegistered || !Yii::$app->user->isGuest) && $comment->load(Yii::$app->getRequest()->post())) {
 
             if ($comment->validate() && Yii::$app->getRequest()->validateCsrfToken()
                 && Yii::$app->getRequest()->getCsrfToken(true) && $comment->save()) {

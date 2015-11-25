@@ -20,7 +20,7 @@ $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
         <?php $this->endCache(); ?>
     <?php endif; ?>
 
-    <?php if (!Comments::getInstance()->onlyRegistered): ?>
+    <?php if (!Comments::getInstance()->onlyRegistered || !Yii::$app->user->isGuest): ?>
         <div class="comments-main-form">
             <?= CommentsForm::widget(); ?>
         </div>

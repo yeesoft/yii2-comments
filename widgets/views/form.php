@@ -2,7 +2,6 @@
 
 use yeesoft\comments\assets\CommentsAsset;
 use yeesoft\comments\Comments;
-use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -25,7 +24,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
     $form = ActiveForm::begin([
         'action' => NULL,
         'validateOnBlur' => FALSE,
-        'validationUrl' => Url::to(Comments::getInstance()->commentsModuleID . '/validate'),
+        'validationUrl' => Url::to(['/' . Comments::getInstance()->commentsModuleID . '/validate/index']),
         'id' => $formID,
         'class' => 'com-form'
     ]);
@@ -80,7 +79,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
                         </div>
                     <?php else: ?>
                         <div class="col-lg-6">
-                            <?= (($comment->parent_id) ? Comments::t('comments', 'Reply as') : Comments::t('comments', 'Post as')) . ' <b>' . Yii::$app->user->username . '</b>'; ?>
+                            <?= (($comment->parent_id) ? Comments::t('comments', 'Reply as') : Comments::t('comments', 'Post as')) . ' <b>' . Yii::$app->user->identity->username . '</b>'; ?>
                         </div>
                     <?php endif; ?>
                 </div>

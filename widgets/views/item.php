@@ -24,7 +24,7 @@ use yii\timeago\TimeAgo;
     </div>
     <?php if ($nested_level < Comments::getInstance()->maxNestedLevel): ?>
         <div class="comment-footer">
-            <?php if (!Comments::getInstance()->onlyRegistered): ?>
+            <?php if (!Comments::getInstance()->onlyRegistered || !Yii::$app->user->isGuest): ?>
                 <a class="reply-button" data-reply-to="<?= $model->id; ?>" href="#"><?=Comments::t('comments', 'Reply')?></a>
                 <!--<span class="dot-left"></span>
                 <a class="glyphicon glyphicon-thumbs-up"></a> <span>0</span> &nbsp;
@@ -36,7 +36,7 @@ use yii\timeago\TimeAgo;
 </div>
 
 <?php if ($nested_level < Comments::getInstance()->maxNestedLevel): ?>
-    <?php if (!Comments::getInstance()->onlyRegistered): ?>
+    <?php if (!Comments::getInstance()->onlyRegistered || !Yii::$app->user->isGuest): ?>
         <div class="reply-form">
             <?php if ($model->id == ArrayHelper::getValue(Yii::$app->getRequest()->post(), 'Comment.parent_id')) : ?>
                 <?= CommentsForm::widget(['reply_to' => $model->id]); ?>

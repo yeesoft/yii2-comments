@@ -7,7 +7,7 @@ $(document).ready(function () {
         event.preventDefault();
         var currentForm = $(this).closest('.comment').find('> .reply-form');
 
-        $.post("/" + commentsModuleID + "/default/get-form", {reply_to: $(this).attr('data-reply-to')})
+        $.post(commentsFormLink, {reply_to: $(this).attr('data-reply-to')})
             .done(function (data) {
                 $('.comments .reply-form').not($(currentForm)).hide(displayFormDuration);
                 $(this).closest('.comment').find('> .reply-form').show(displayFormDuration);
