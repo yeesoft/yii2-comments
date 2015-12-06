@@ -3,9 +3,9 @@
 namespace yeesoft\comments\widgets;
 
 use yeesoft\comments\assets\CommentsAsset;
+use yeesoft\comments\Comments as CommentModule;
 use yeesoft\comments\components\CommentsHelper;
 use yeesoft\comments\models\Comment;
-use yeesoft\comments\Comments as CommentModule;
 use Yii;
 use yii\base\Model;
 
@@ -38,7 +38,8 @@ class Comments extends \yii\base\Widget
         if ((!CommentModule::getInstance()->onlyRegistered || !Yii::$app->user->isGuest) && $comment->load(Yii::$app->getRequest()->post())) {
 
             if ($comment->validate() && Yii::$app->getRequest()->validateCsrfToken()
-                && Yii::$app->getRequest()->getCsrfToken(true) && $comment->save()) {
+                && Yii::$app->getRequest()->getCsrfToken(true) && $comment->save()
+            ) {
                 if (Yii::$app->user->isGuest) {
                     CommentsHelper::setCookies([
                         'username' => $comment->username,

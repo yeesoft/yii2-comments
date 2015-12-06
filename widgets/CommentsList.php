@@ -2,8 +2,8 @@
 
 namespace yeesoft\comments\widgets;
 
-use yeesoft\comments\models\Comment;
 use yeesoft\comments\Comments as CommentsModule;
+use yeesoft\comments\models\Comment;
 use yii\data\ActiveDataProvider;
 
 /**

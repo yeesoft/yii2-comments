@@ -1,7 +1,7 @@
 <?php
 
-use yeesoft\comments\components\CommentsHelper;
 use yeesoft\comments\Comments;
+use yeesoft\comments\components\CommentsHelper;
 use yeesoft\comments\widgets\CommentsForm;
 use yeesoft\comments\widgets\CommentsList;
 use yii\helpers\ArrayHelper;
@@ -25,7 +25,8 @@ use yii\timeago\TimeAgo;
     <?php if ($nested_level < Comments::getInstance()->maxNestedLevel): ?>
         <div class="comment-footer">
             <?php if (!Comments::getInstance()->onlyRegistered || !Yii::$app->user->isGuest): ?>
-                <a class="reply-button" data-reply-to="<?= $model->id; ?>" href="#"><?=Comments::t('comments', 'Reply')?></a>
+                <a class="reply-button" data-reply-to="<?= $model->id; ?>"
+                   href="#"><?= Comments::t('comments', 'Reply') ?></a>
                 <!--<span class="dot-left"></span>
                 <a class="glyphicon glyphicon-thumbs-up"></a> <span>0</span> &nbsp;
                 <a class="glyphicon glyphicon-thumbs-down"></a> <span>0</span><span class="dot-left"></span>

@@ -3,9 +3,9 @@
 namespace yeesoft\comments\assets;
 
 use yeesoft\comments\Comments;
+use yii\helpers\Url;
 use yii\web\AssetBundle;
 use yii\web\View;
-use yii\helpers\Url;
 
 class CommentsAsset extends AssetBundle
 {

@@ -1,13 +1,18 @@
 <?php
+/**
+ * @link http://www.yee-soft.com/
+ * @copyright Copyright (c) 2015 Yee CMS
+ * @license http://www.apache.org/licenses/LICENSE-2.0
+ */
 
 namespace yeesoft\comments;
 
 use Yii;
 
 /**
- * Comments Module For Yii2
+ * Comments Module For Yii2 Framework
  *
- * @author Taras Makitra <taras.makitra@gmail.com>
+ * @author Taras Makitra <makitrataras@gmail.com>
  */
 class Comments extends \yii\base\Module
 {

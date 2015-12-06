@@ -1,9 +1,9 @@
 <?php
 
+use yeesoft\comments\Comments;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
-use yeesoft\comments\Comments;
 
 /* @var $this yii\web\View */
 /* @var $model yeesoft\comments\models\Comment */

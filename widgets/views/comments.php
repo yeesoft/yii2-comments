@@ -1,8 +1,8 @@
 <?php
 
+use yeesoft\comments\Comments;
 use yeesoft\comments\components\CommentsHelper;
 use yeesoft\comments\models\Comment;
-use yeesoft\comments\Comments;
 use yeesoft\comments\widgets\CommentsForm;
 use yeesoft\comments\widgets\CommentsList;
 use yii\timeago\TimeAgo;

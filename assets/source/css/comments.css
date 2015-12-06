@@ -67,7 +67,7 @@
 }
 
 .comment:hover .comment-header, .comment:hover .comment-footer {
-/ / opacity : 0.9;
+    /* opacity : 0.9; */
 }
 
 .comment:hover a {
