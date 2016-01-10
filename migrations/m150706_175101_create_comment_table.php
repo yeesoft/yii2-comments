@@ -24,6 +24,7 @@ class m150706_175101_create_comment_table extends Migration
             'status' => Schema::TYPE_INTEGER . '(1) unsigned NOT NULL DEFAULT "1" COMMENT "0-pending,1-published,2-spam,3-deleted"',
             'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
             'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'updated_by' => Schema::TYPE_INTEGER . ' DEFAULT NULL',
             'content' => Schema::TYPE_TEXT . ' NOT NULL',
             'user_ip' => Schema::TYPE_STRING . '(15) DEFAULT NULL',
         ], $tableOptions);

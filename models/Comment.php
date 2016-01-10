@@ -5,6 +5,7 @@ namespace yeesoft\comments\models;
 use yeesoft\comments\Comments;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "comment".
@@ -62,6 +63,11 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             TimestampBehavior::className(),
+            'blameable' => [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'user_id',
+            ]
+            
         ];
     }
 
@@ -73,7 +79,7 @@ class Comment extends \yii\db\ActiveRecord
         return [
             [['content'], 'required'],
             [['username', 'email'], 'required', 'on' => self::SCENARIO_GUEST],
-            [['parent_id'], 'integer'],
+            [['created_at', 'status', 'parent_id'], 'integer'],
             [['content'], 'string'],
             [['username'], 'string', 'max' => 128],
             [['username', 'content'], 'string', 'min' => 4],
@@ -85,7 +91,6 @@ class Comment extends \yii\db\ActiveRecord
                 'targetAttribute' => 'username',
                 'on' => self::SCENARIO_GUEST,
             ],
-            ['created_at', 'date', 'timestampAttribute' => 'created_at'],
         ];
     }
 
