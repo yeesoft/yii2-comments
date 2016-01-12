@@ -74,11 +74,11 @@
     opacity: 1;
 }
 
-.comment .comment-content, .comment-form .comment-fields, .comment .comment-form-reply {
+.comment .display-avatar, .comment-form .display-avatar {
     margin-left: 60px;
 }
 
-.sub-comments .comment-content, .sub-comments .comment-fields, .sub-comments .comment-form-reply {
+.sub-comments .display-avatar,{
     margin-left: 50px;
 }
 
