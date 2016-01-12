@@ -33,11 +33,12 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
         echo $form->field($comment, 'parent_id')->hiddenInput()->label(false);
     }
     ?>
-
-    <div class="avatar">
-        <img src="<?= Comments::getInstance()->renderUserAvatar(Yii::$app->user->id) ?>"/>
-    </div>
-    <div class="comment-fields">
+    <?php if (Comments::getInstance()->displayAvatar): ?>
+        <div class="avatar">
+            <img src="<?= Comments::getInstance()->renderUserAvatar(Yii::$app->user->id) ?>"/>
+        </div>
+    <?php endif; ?>
+    <div class="comment-fields<?= (Comments::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
 
         <div class="row">
             <div class="col-lg-12">
