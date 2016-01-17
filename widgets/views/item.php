@@ -9,12 +9,12 @@ use yii\helpers\HtmlPurifier;
 use yii\timeago\TimeAgo;
 
 ?>
-
-<div class="avatar">
-    <img src="<?= Comments::getInstance()->renderUserAvatar($model->user_id) ?>"/>
-</div>
-
-<div class="comment-content">
+<?php if (Comments::getInstance()->displayAvatar): ?>
+    <div class="avatar">
+        <img src="<?= Comments::getInstance()->renderUserAvatar($model->user_id) ?>"/>
+    </div>
+<?php endif; ?>
+<div class="comment-content<?= (Comments::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
     <div class="comment-header">
         <a class="author"><?= HtmlPurifier::process($model->getAuthor()); ?></a>
         <span class="time dot-left dot-right"><?= TimeAgo::widget(['timestamp' => $model->created_at]); ?></span>
