@@ -196,7 +196,8 @@ class Comments extends \yii\base\Module
         } elseif (is_string($this->userAvatar)) {
             return $this->userAvatar;
         } else {
-            return call_user_func($this->userAvatar, $user_id);
+            $defaultAvatar = $this->commentsAssetUrl . self::DEFAULT_AVATAR;
+            return ($avatar = call_user_func($this->userAvatar, $user_id)) ? $avatar : $defaultAvatar;
         }
     }
 }
