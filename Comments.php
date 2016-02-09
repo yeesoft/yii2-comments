@@ -108,12 +108,12 @@ class Comments extends \yii\base\Module
     public $userAvatar;
 
     /**
-     *  
+     *
      *
      * @var boolean
      */
     public $displayAvatar = TRUE;
-    
+
     /**
      * Comments asset url
      *

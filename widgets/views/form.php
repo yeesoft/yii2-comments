@@ -42,12 +42,10 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
 
         <div class="row">
             <div class="col-lg-12">
-                <?=
-                $form->field($comment, 'content')->textarea([
+                <?= $form->field($comment, 'content')->textarea([
                     'class' => 'form-control input-sm',
                     'placeholder' => Comments::t('comments', 'Share your thoughts...')
-                ])->label(false);
-                ?>
+                ])->label(false) ?>
             </div>
         </div>
 
@@ -60,23 +58,19 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
                 <div class="row">
                     <?php if (Yii::$app->user->isGuest): ?>
                         <div class="col-lg-6">
-                            <?=
-                            $form->field($comment, 'username', ['enableAjaxValidation' => true])->textInput([
+                            <?= $form->field($comment, 'username', ['enableAjaxValidation' => true])->textInput([
                                 'maxlength' => true,
                                 'class' => 'form-control input-sm',
                                 'placeholder' => Comments::t('comments', 'Your name')
-                            ])->label(false)
-                            ?>
+                            ])->label(false) ?>
                         </div>
                         <div class="col-lg-6">
-                            <?=
-                            $form->field($comment, 'email')->textInput([
+                            <?= $form->field($comment, 'email')->textInput([
                                 'maxlength' => true,
                                 'email' => true,
                                 'class' => 'form-control input-sm',
                                 'placeholder' => Comments::t('comments', 'Your email')
-                            ])->label(false)
-                            ?>
+                            ])->label(false) ?>
                         </div>
                     <?php else: ?>
                         <div class="col-lg-6">

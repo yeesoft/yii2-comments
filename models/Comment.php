@@ -4,8 +4,8 @@ namespace yeesoft\comments\models;
 
 use yeesoft\comments\Comments;
 use Yii;
-use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "comment".
@@ -16,6 +16,7 @@ use yii\behaviors\BlameableBehavior;
  * @property integer $user_id
  * @property string $username
  * @property string $email
+ * @property integer $super_parent_id
  * @property integer $parent_id
  * @property integer $status
  * @property integer $created_at
@@ -38,6 +39,8 @@ class Comment extends \yii\db\ActiveRecord
     const STATUS_PUBLISHED = self::STATUS_APPROVED;
     const SCENARIO_GUEST = 'guest';
     const SCENARIO_USER = 'user';
+
+    private $_comments;
 
     /**
      * @inheritdoc
@@ -67,7 +70,6 @@ class Comment extends \yii\db\ActiveRecord
                 'class' => BlameableBehavior::className(),
                 'createdByAttribute' => 'user_id',
             ]
-            
         ];
     }
 
@@ -79,7 +81,7 @@ class Comment extends \yii\db\ActiveRecord
         return [
             [['content'], 'required'],
             [['username', 'email'], 'required', 'on' => self::SCENARIO_GUEST],
-            [['created_at', 'status', 'parent_id'], 'integer'],
+            [['created_at', 'status', 'parent_id', 'super_parent_id'], 'integer'],
             [['content'], 'string'],
             [['username'], 'string', 'max' => 128],
             [['username', 'content'], 'string', 'min' => 4],
@@ -100,8 +102,8 @@ class Comment extends \yii\db\ActiveRecord
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_USER] = ['content', 'parent_id'];
-        $scenarios[self::SCENARIO_GUEST] = ['username', 'email', 'content', 'parent_id'];
+        $scenarios[self::SCENARIO_USER] = ['content', 'parent_id', 'super_parent_id'];
+        $scenarios[self::SCENARIO_GUEST] = ['username', 'email', 'content', 'parent_id', 'super_parent_id'];
         return $scenarios;
     }
 
@@ -117,6 +119,7 @@ class Comment extends \yii\db\ActiveRecord
             'user_id' => Comments::t('comments', 'User ID'),
             'username' => Comments::t('comments', 'Username'),
             'email' => Comments::t('comments', 'E-mail'),
+            'super_parent_id' => Comments::t('comments', 'Super Parent Comment'),
             'parent_id' => Comments::t('comments', 'Parent Comment'),
             'status' => Comments::t('comments', 'Status'),
             'created_at' => Comments::t('comments', 'Created'),
@@ -131,9 +134,39 @@ class Comment extends \yii\db\ActiveRecord
      *
      * @return CommentQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find($loadComments = false)
     {
-        return new CommentQuery(get_called_class());
+        $query = new CommentQuery(get_called_class());
+
+        if ($loadComments) {
+            $query->loadComments = true;
+        }
+
+        return $query;
+    }
+
+    public function save($runValidation = true, $attributeNames = null)
+    {
+        if (isset($this->parent_id) && $this->parent_id) {
+            $parent = self::find()
+                ->where(['id' => $this->parent_id])
+                ->select('super_parent_id')->one();
+
+            $super_parent_id = ($parent->super_parent_id) ? $parent->super_parent_id : $this->parent_id;
+            $this->super_parent_id = $super_parent_id;
+        }
+
+        return parent::save($runValidation, $attributeNames);
+    }
+
+    public function getComments()
+    {
+        return $this->_comments;
+    }
+
+    public function setComments($comments)
+    {
+        $this->_comments = $comments;
     }
 
     /**
@@ -219,7 +252,6 @@ class Comment extends \yii\db\ActiveRecord
             $userModel = Comments::getInstance()->userModel;
             $user = $userModel::findIdentity($this->user_id);
             return ($user && isset($user)) ? $user->username : Comments::getInstance()->deletedUserName;
-
         } else {
             return $this->username;
         }

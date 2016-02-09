@@ -21,11 +21,11 @@ class m150706_175101_create_comment_table extends Migration
             'username' => Schema::TYPE_STRING . '(128) DEFAULT NULL',
             'email' => Schema::TYPE_STRING . '(128) DEFAULT NULL',
             'parent_id' => Schema::TYPE_INTEGER . '(11) DEFAULT NULL COMMENT "null-is not a reply, int-replied comment id"',
+            'content' => Schema::TYPE_TEXT . ' NOT NULL',
             'status' => Schema::TYPE_INTEGER . '(1) unsigned NOT NULL DEFAULT "1" COMMENT "0-pending,1-published,2-spam,3-deleted"',
             'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
             'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
             'updated_by' => Schema::TYPE_INTEGER . ' DEFAULT NULL',
-            'content' => Schema::TYPE_TEXT . ' NOT NULL',
             'user_ip' => Schema::TYPE_STRING . '(15) DEFAULT NULL',
         ], $tableOptions);
 

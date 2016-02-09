@@ -6,7 +6,6 @@ use yeesoft\comments\models\Comment;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\HtmlPurifier;
-use yii\web\Cookie;
 
 class CommentsForm extends \yii\base\Widget
 {

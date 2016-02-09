@@ -4,10 +4,12 @@ namespace yeesoft\comments\widgets;
 
 use yeesoft\comments\assets\CommentsAsset;
 use yeesoft\comments\Comments as CommentModule;
+use yeesoft\comments\Comments as CommentsModule;
 use yeesoft\comments\components\CommentsHelper;
 use yeesoft\comments\models\Comment;
 use Yii;
 use yii\base\Model;
+use yii\data\ActiveDataProvider;
 
 class Comments extends \yii\base\Widget
 {
@@ -47,10 +49,30 @@ class Comments extends \yii\base\Widget
                     ]);
                 }
 
-                return Yii::$app->getResponse()->redirect(Yii::$app->request->referrer);
+                Yii::$app->getResponse()->redirect(Yii::$app->request->referrer);
+                return;
             }
         }
 
-        return $this->render('comments', compact('model', 'model_id', 'comment'));
+        $dataProvider = new ActiveDataProvider([
+            'query' => Comment::find(true)->where([
+                'model' => $model,
+                'model_id' => $model_id,
+                'parent_id' => NULL,
+                'status' => Comment::STATUS_PUBLISHED,
+            ]),
+            'pagination' => [
+                'pageSize' => CommentsModule::getInstance()->commentsPerPage,
+                'pageParam' => 'comment-page',
+                'pageSizeParam' => 'comments-per-page',
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => CommentsModule::getInstance()->orderDirection,
+                ]
+            ],
+        ]);
+
+        return $this->render('comments', compact('model', 'model_id', 'comment', 'dataProvider'));
     }
 }

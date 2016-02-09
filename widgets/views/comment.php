@@ -1,11 +1,9 @@
 <?php
 
 use yeesoft\comments\Comments;
-use yeesoft\comments\components\CommentsHelper;
 use yeesoft\comments\widgets\CommentsForm;
-use yeesoft\comments\widgets\CommentsList;
 use yii\helpers\ArrayHelper;
-use yii\helpers\HtmlPurifier;
+use yii\helpers\Html;
 use yii\timeago\TimeAgo;
 
 ?>
@@ -16,11 +14,11 @@ use yii\timeago\TimeAgo;
 <?php endif; ?>
 <div class="comment-content<?= (Comments::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
     <div class="comment-header">
-        <a class="author"><?= HtmlPurifier::process($model->getAuthor()); ?></a>
+        <a class="author"><?= Html::encode($model->getAuthor()); ?></a>
         <span class="time dot-left dot-right"><?= TimeAgo::widget(['timestamp' => $model->created_at]); ?></span>
     </div>
     <div class="comment-text">
-        <?= HtmlPurifier::process($model->content); ?>
+        <?= Html::encode($model->content); ?>
     </div>
     <?php if ($nested_level < Comments::getInstance()->maxNestedLevel): ?>
         <div class="comment-footer">
@@ -38,22 +36,23 @@ use yii\timeago\TimeAgo;
 
 <?php if ($nested_level < Comments::getInstance()->maxNestedLevel): ?>
     <?php if (!Comments::getInstance()->onlyRegistered || !Yii::$app->user->isGuest): ?>
-        <div class="reply-form">
+        <div class="reply-form<?= (Comments::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
             <?php if ($model->id == ArrayHelper::getValue(Yii::$app->getRequest()->post(), 'Comment.parent_id')) : ?>
                 <?= CommentsForm::widget(['reply_to' => $model->id]); ?>
             <?php endif; ?>
         </div>
     <?php endif; ?>
 
-    <?php
-    if ($model->isReplied()) {
-        echo CommentsList::widget(ArrayHelper::merge(
-            CommentsHelper::getReplyConfig($model), [
-            "comment" => $comment,
-            "nested_level" => $nested_level + 1
-        ]));
-    }
-    ?>
+    <?php if (!empty($model->comments)) : ?>
+        <div class="sub-comments">
+            <?php $nested_level++; ?>
+            <?php foreach ($model->comments as $model) : ?>
+                <div class="comment">
+                    <?= $this->render('comment', compact('model', 'widget', 'nested_level')) ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 <?php endif; ?>
 
 
