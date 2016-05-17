@@ -1,20 +1,20 @@
 <?php
 
 use yii\db\Migration;
-use yii\db\Schema;
 
 class m160207_123123_add_super_parent_id extends Migration
 {
-
+    const TABLE_NAME = '{{%comment}}';
+    
     public function up()
     {
-        $this->addColumn('comment', 'super_parent_id', Schema::TYPE_INTEGER . '(11) DEFAULT NULL COMMENT "null-has no parent, int-1st level parent id" AFTER `email`');
-        $this->createIndex('comment_super_parent_id', 'comment', 'super_parent_id');
+        $this->addColumn(self::TABLE_NAME, 'super_parent_id', $this->integer()->comment('null-has no parent, int-1st level parent id')->after('email'));
+        $this->createIndex('comment_super_parent_id', self::TABLE_NAME, 'super_parent_id');
     }
 
     public function down()
     {
-        $this->dropIndex('comment_super_parent_id', 'comment');
-        $this->dropColumn('comment', 'super_parent_id');
+        $this->dropIndex('comment_super_parent_id', self::TABLE_NAME);
+        $this->dropColumn(self::TABLE_NAME, 'super_parent_id');
     }
 }
