@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yee-soft.com/
  * @copyright Copyright (c) 2015 Yee CMS
@@ -16,6 +17,7 @@ use Yii;
  */
 class Comments extends \yii\base\Module
 {
+
     /**
      * Version number of the module.
      */
@@ -200,4 +202,29 @@ class Comments extends \yii\base\Module
             return ($avatar = call_user_func($this->userAvatar, $user_id)) ? $avatar : $defaultAvatar;
         }
     }
+
+    public static function getMultilingUrl($url)
+    {
+        $languages = Yii::$app->yee->languages;
+        $languageRedirects = Yii::$app->yee->languageRedirects;
+
+        $language = Yii::$app->language;
+        $language = (isset($languageRedirects[$language])) ? $languageRedirects[$language] : $language;
+        $language = '/' . $language . '/';
+
+        $keys = array_unique(array_merge(array_keys($languages), array_values($languageRedirects)));
+
+        array_walk($keys, function(&$item) {
+            $item = '/' . $item . '/';
+        });
+
+        foreach ($keys as $key) {
+            if (strpos($url, $key) === 0) {
+                $url = substr($url, strlen($key));
+            }
+        }
+
+        return $language . $url;
+    }
+
 }

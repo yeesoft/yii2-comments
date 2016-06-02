@@ -6,6 +6,8 @@ use yeesoft\comments\Comments;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\HtmlPurifier;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "comment".
@@ -23,6 +25,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $updated_at
  * @property string $content
  * @property string $user_ip
+ * @property string $url
  */
 
 /**
@@ -32,6 +35,7 @@ use yii\behaviors\TimestampBehavior;
  */
 class Comment extends \yii\db\ActiveRecord
 {
+
     const STATUS_PENDING = 0;
     const STATUS_APPROVED = 1;
     const STATUS_SPAM = 2;
@@ -84,6 +88,7 @@ class Comment extends \yii\db\ActiveRecord
             [['created_at', 'status', 'parent_id', 'super_parent_id'], 'integer'],
             [['content'], 'string'],
             [['username'], 'string', 'max' => 128],
+            [['url'], 'string', 'max' => 255],
             [['username', 'content'], 'string', 'min' => 4],
             ['username', 'match', 'pattern' => Comments::getInstance()->usernameRegexp, 'on' => self::SCENARIO_GUEST],
             ['username', 'match', 'not' => true, 'pattern' => Comments::getInstance()->usernameBlackRegexp, 'on' => self::SCENARIO_GUEST],
@@ -126,6 +131,7 @@ class Comment extends \yii\db\ActiveRecord
             'updated_at' => Comments::t('comments', 'Updated'),
             'content' => Comments::t('comments', 'Content'),
             'user_ip' => Comments::t('comments', 'IP'),
+            'url' => Comments::t('comments', 'URL'),
         ];
     }
 
@@ -149,14 +155,19 @@ class Comment extends \yii\db\ActiveRecord
     {
         if (isset($this->parent_id) && $this->parent_id) {
             $parent = self::find()
-                ->where(['id' => $this->parent_id])
-                ->select('super_parent_id')->one();
+                            ->where(['id' => $this->parent_id])
+                            ->select('super_parent_id')->one();
 
             $super_parent_id = ($parent->super_parent_id) ? $parent->super_parent_id : $this->parent_id;
             $this->super_parent_id = $super_parent_id;
         }
 
         return parent::save($runValidation, $attributeNames);
+    }
+
+    public function getShortContent($length = 64)
+    {
+        return HtmlPurifier::process(mb_substr(Html::encode($this->content), 0, $length, "UTF-8")) . ((strlen($this->content) > $length) ? '...' : '');
     }
 
     public function getComments()
@@ -263,6 +274,7 @@ class Comment extends \yii\db\ActiveRecord
     public function setUserData()
     {
         $this->user_ip = Yii::$app->getRequest()->getUserIP();
+        $this->url = Yii::$app->getRequest()->url;
 
         if (!Yii::$app->user->isGuest) {
             $this->user_id = Yii::$app->user->id;
@@ -290,4 +302,5 @@ class Comment extends \yii\db\ActiveRecord
     {
         return Comment::find()->where(['model' => $model, 'model_id' => $model_id])->active()->count();
     }
+
 }

@@ -153,3 +153,28 @@
         margin-bottom: 10px;
     }
 }
+
+.recent-comments .panel-body{
+    padding: 10px 10px 10px 5px;
+}
+.recent-comments .recent-comment{
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    word-wrap: break-word;
+}
+.recent-comments .recent-comment .avatar{
+    border: 1px solid #ddd; 
+    border-radius: 3px;
+}  
+.recent-comments .recent-comment .author{
+    font-weight: normal !important;
+    font-size: 0.8em;
+    width: 70px; 
+}       
+.recent-comments .recent-comment .time{
+    font-size: 0.7em;
+}       
+.recent-comments .recent-comment .content{
+    font-size: 0.8em;
+}
