@@ -62,6 +62,13 @@ class Comments extends \yii\base\Module
      * @var int
      */
     public $commentsPerPage = 5;
+    
+    /**
+     * Bootstrap grid columns count.
+     *
+     * @var int
+     */
+    public $gridColumns = 12;
 
     /**
      *  Indicates whether not registered users can leave a comment
@@ -128,7 +135,7 @@ class Comments extends \yii\base\Module
      *
      * @var string
      */
-    public $usernameRegexp = '/^(\w|\d|_|\-| )+$/';
+    public $usernameRegexp = '/^(\w|\p{L}|\d|_|\-| )+$/ui';
 
     /**
      * Pattern that will be applied for user names on comment form.

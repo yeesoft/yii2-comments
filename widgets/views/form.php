@@ -14,6 +14,9 @@ use yii\widgets\ActiveForm;
 $commentsAsset = CommentsAsset::register($this);
 Comments::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
 
+$col12 = Comments::getInstance()->gridColumns;
+$col6 = (int) ($col12 / 2);
+
 $formID = 'comment-form' . (($comment->parent_id) ? '-' . $comment->parent_id : '');
 $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
 ?>
@@ -41,7 +44,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
     <div class="comment-fields<?= (Comments::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
 
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-<?= $col12 ?>">
                 <?= $form->field($comment, 'content')->textarea([
                     'class' => 'form-control input-sm',
                     'placeholder' => Comments::t('comments', 'Share your thoughts...')
@@ -57,14 +60,14 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
             <div class="fields">
                 <div class="row">
                     <?php if (Yii::$app->user->isGuest): ?>
-                        <div class="col-lg-6">
-                            <?= $form->field($comment, 'username', ['enableAjaxValidation' => true])->textInput([
+                        <div class="col-lg-<?= $col6 ?>">
+                            <?= $form->field($comment, 'username', ['enableClientValidation' => false, 'enableAjaxValidation' => true])->textInput([
                                 'maxlength' => true,
                                 'class' => 'form-control input-sm',
                                 'placeholder' => Comments::t('comments', 'Your name')
                             ])->label(false) ?>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-<?= $col6 ?>">
                             <?= $form->field($comment, 'email')->textInput([
                                 'maxlength' => true,
                                 'email' => true,
@@ -73,7 +76,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
                             ])->label(false) ?>
                         </div>
                     <?php else: ?>
-                        <div class="col-lg-6">
+                        <div class="col-lg-<?= $col6 ?>">
                             <?= (($comment->parent_id) ? Comments::t('comments', 'Reply as') : Comments::t('comments', 'Post as')) . ' <b>' . Yii::$app->user->identity->username . '</b>'; ?>
                         </div>
                     <?php endif; ?>
