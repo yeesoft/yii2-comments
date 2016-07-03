@@ -153,6 +153,7 @@ class Comment extends \yii\db\ActiveRecord
 
     public function save($runValidation = true, $attributeNames = null)
     {
+        \Yii::$app->cache->flush();
         if (isset($this->parent_id) && $this->parent_id) {
             $parent = self::find()
                             ->where(['id' => $this->parent_id])
