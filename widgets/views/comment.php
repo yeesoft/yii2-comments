@@ -15,7 +15,7 @@ use yii\timeago\TimeAgo;
 <div class="comment-content<?= (Comments::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
     <div class="comment-header">
         <a class="author"><?= Html::encode($model->getAuthor()); ?></a>
-        <span class="time dot-left dot-right"><?= TimeAgo::widget(['timestamp' => $model->created_at, 'language' => Yii::$app->language]); ?></span>
+        <span class="time dot-left dot-right"><?= TimeAgo::widget(['timestamp' => $model->created_at]); ?></span>
     </div>
     <div class="comment-text">
         <?= Html::encode($model->content); ?>
