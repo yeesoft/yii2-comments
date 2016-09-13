@@ -27,22 +27,9 @@ $(document).ready(function () {
         $(this).closest('.reply-form').hide(displayFormDuration);
     });
 
-    //Disable submit button after click
-    $(document).on('beforeValidate', ".comments-main-form form, .comment-form form", function (event, messages) {
+    //Disable double button submit after submit
+    $(document).on('beforeSubmit', ".comments-main-form form, .comment-form form", function (event, messages) {
         $(this).find("[type=submit]").prop('disabled', true);
-    });
-
-    //Enable submit button if form has errors
-    $(document).on('afterValidate', ".comments-main-form form, .comment-form form", function (event, messages) {
-        var hasError = false;
-
-        for (var propertyName in messages) {
-            hasError = hasError || !(!messages[propertyName] || 0 === messages[propertyName].length);
-        }
-
-        if (hasError) {
-            $(this).find("[type=submit]").prop('disabled', false);
-        }
     });
 
 });
