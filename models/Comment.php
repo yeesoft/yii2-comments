@@ -281,6 +281,24 @@ class Comment extends \yii\db\ActiveRecord
             $this->user_id = Yii::$app->user->id;
         }
     }
+    
+    /**
+     * Check if the comment is spam or not. If true the comment will be marked as spam.
+     * 
+     * @return Return true if comment was checked successfully
+     */
+    public function checkSpam()
+    {
+        if(Comments::getInstance()->enableSpamProtection){
+            $isSpam = Yii::$app->akismet->isSpam($this->content, $this->username, $this->email, $this->url, null, 'comment');
+            
+            if($isSpam){
+                $this->status = self::STATUS_SPAM;
+            }
+        }
+        
+        return true;
+    }
 
     /**
      * Check whether comment has replies

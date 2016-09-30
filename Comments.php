@@ -48,6 +48,25 @@ class Comments extends \yii\base\Module
      * @var string
      */
     public $deletedUserName = 'DELETED';
+    
+    /**
+     * If is true all comments will be checked by Akismet API if it is a spam or not.
+     * If the comment is spam it will be marked as spam.
+     * 
+     * Note! `yeesoft\comments\components\Akismet` component must be configured:
+     * 
+     * ~~~
+     * 'components' => [
+     *     'akismet' => [
+     *         'class' => 'yeesoft\comments\components\Akismet',
+     *         'apiKey' => '*******',
+     *     ],
+     * ]
+     * ~~~
+     *
+     * @var bool
+     */
+    public $enableSpamProtection = false;
 
     /**
      * Maximum allowed nested level for comment's replies

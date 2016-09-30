@@ -15,6 +15,7 @@
   },
   "require": {
     "yiisoft/yii2": "*",
-    "yiidoc/yii2-timeago": "dev-master"
+    "yiidoc/yii2-timeago": "^2.0",
+    "tijsverkoyen/akismet": "^1.1"
   }
 }
