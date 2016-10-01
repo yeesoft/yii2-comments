@@ -56,6 +56,24 @@ public function behaviors()
 }
 ```
 
+- How to enable anti-spam protection (using Akismet) [optional]
+
+```php
+'modules' => [
+	'comments' => [
+		...
+		 'enableSpamProtection' => true,
+		 ...
+	],
+],
+'components' => [
+	'akismet' => [
+            'class' => 'yeesoft\comments\components\Akismet',
+            'apiKey' => '*******', //you can get your apiKey here: https://akismet.com/
+	],
+],
+```
+
 Usage
 ---
 
