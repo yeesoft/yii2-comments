@@ -68,7 +68,7 @@ class Comments extends \yii\base\Widget
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'id' => CommentsModule::getInstance()->orderDirection,
+                    'created_at' => CommentsModule::getInstance()->orderDirection,
                 ]
             ],
         ]);
