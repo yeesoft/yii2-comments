@@ -32,5 +32,5 @@ return [
     'User ID' => 'ID do utilizador',
     'Username' => 'Utilizador',
     'Your email' => 'Seu email',
-    'Your name' => 'Seu nomeя',
+    'Your name' => 'Seu nome',
 ];
