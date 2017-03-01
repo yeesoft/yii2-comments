@@ -12,13 +12,13 @@ Installation
 - Either run
 
 ```
-composer require --prefer-dist yeesoft/yii2-comments "*"
+composer require --prefer-dist yeesoft/yii2-comments "~0.1"
 ```
 
 or add
 
 ```
-"yeesoft/yii2-comments": "*"
+"yeesoft/yii2-comments": "~0.1"
 ```
 
 to the require section of your `composer.json` file.
